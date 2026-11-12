@@ -1,0 +1,120 @@
+/* home.css */
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #ffcc00, #ffdd55);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Home Container */
+.home-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 800px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Section */
+.home-header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: #FFD700;
+    color: #333;
+}
+
+.logo-container {
+    margin-right: 20px;
+}
+
+.home-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.welcome-text h1 {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+/* Main Content */
+.home-main {
+    padding: 20px;
+    text-align: center;
+}
+
+.home-main p {
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: #4a4a4a;
+}
+
+.primary-button {
+    background: #FFCC00;
+    color: #fff;
+    border: 2px solid #FFCC00;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.primary-button:hover {
+    background: transparent;
+    color: #FFCC00;
+}
+
+/* Footer Section */
+.home-footer {
+    padding: 10px 20px;
+    text-align: right;
+    background-color: #fff3c4;
+}
+
+.logout-button {
+    background: #ff8800;
+    color: #fff;
+    border: 2px solid #ff8800;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.logout-button:hover {
+    background: transparent;
+    color: #ff8800;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .home-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    .logo-container {
+        margin: 0 0 10px 0;
+    }
+    .home-footer {
+        text-align: center;
+    }
+}

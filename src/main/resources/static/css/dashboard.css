@@ -1,0 +1,2057 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.dashboard-container {
+    display: flex;
+    width: 100%;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #FFD700; /* Yellow/Honey Color */
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: width 0.3s ease;
+    overflow-x: hidden;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure sidebar is above other content */
+}
+
+.main-content {
+    margin-left: 250px; /* Same as Sidebar Width */
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content.expanded {
+    margin-left: 60px; /* Same as Collapsed Sidebar Width */
+}
+
+/* Header Section */
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #FFD700; /* Yellow/Honey Color */
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user-info h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333; /* Dark text color */
+}
+
+/* Sections */
+.section {
+    margin-bottom: 20px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.section h2 {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: #333; /* Dark text color */
+}
+
+.leaderboard ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.leaderboard li {
+    padding: 5px 0;
+    color: #333; /* Dark text color */
+}
+
+/* Course Card Styles - UPDATED */
+.course-card {
+    display: inline-block;
+    width: 300px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex !important; /* Override any other display values */
+    flex-direction: column;
+    border-left: 3px solid #eed460;
+    position: relative; /* Added for bookmark button positioning */
+}
+
+.course-card img {
+    width: 100%;
+    height: 150px; /* Fixed height for images */
+    object-fit: cover; /* Ensure images maintain aspect ratio */
+    border-radius: 8px;
+}
+
+.course-details {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 15px 0 0 0;
+    min-height: 0; /* Allow content to shrink if needed */
+}
+
+.course-content {
+    flex: 1;
+    margin-bottom: 15px;
+}
+
+.course-details h3 {
+    margin: 0 0 10px;
+    font-size: 1.1em;
+    color: #333;
+    white-space: normal; /* Allow wrapping */
+}
+
+.course-details p {
+    margin: 0 0 10px;
+    font-size: 0.9em;
+    color: #666;
+    white-space: normal; /* Allow wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+/* Course Meta Information */
+.course-meta {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.course-category,
+.course-level {
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: #e0f7fa;
+}
+
+.course-level.beginner {
+    background-color: #c8e6c9;
+}
+
+.course-level.intermediate {
+    background-color: #fff3e0;
+}
+
+.course-level.advanced {
+    background-color: #ffcdd2;
+}
+
+/* Button Styles - UPDATED */
+.card-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+}
+
+/* Start Learning Button - UPDATED */
+.start-learning-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; /* Match width of Reviews button */
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FFD700;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.start-learning-button:hover {
+    background-color: #FFA000;
+}
+
+/* Reviews Button - UPDATED */
+.reviews-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 13px;
+    border: 1px solid #e0e0e0;
+    background-color: rgba(255, 215, 0, 0.1);
+    color: #333;
+    width: 100%;
+    transition: all 0.2s ease;
+    margin-top: 2px; /* Add small space between buttons */
+    box-sizing: border-box;
+}
+
+.reviews-btn:hover {
+    background-color: rgba(255, 215, 0, 0.2);
+    border-color: #FFD700;
+}
+
+/* Star Rating Inside Reviews Button */
+.star-rating {
+    display: flex;
+    align-items: center;
+    color: #FFD700;
+}
+
+.star-icon {
+    color: #FFD700; /* Gold star color */
+    margin-right: 4px;
+}
+
+.star-rating i {
+    color: #FFD700; /* Gold color for stars */
+    margin-right: 2px;
+    font-size: 12px;
+}
+
+.star-rating i.far {
+    color: #FFD700; /* Gold but with opacity for empty stars */
+    opacity: 0.3;
+}
+
+.review-count {
+    font-size: 12px;
+    color: #888;
+}
+
+/* Bookmark Button - UPDATED */
+.bookmark-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #666;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bookmark-btn:hover {
+    background: #fff;
+    transform: scale(1.05);
+}
+
+.bookmark-btn .fas {
+    color: #FFD700;
+}
+
+/* Completed Courses Section */
+.completed-courses {
+    margin-top: 20px;
+}
+
+.completed-courses .course-card {
+    border-left: 4px solid #4CAF50;
+    position: relative;
+}
+
+.completion-date {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.completion-date i {
+    color: #4CAF50;
+}
+
+.completion-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9em;
+    margin-top: 10px;
+    color: #666;
+}
+
+.completion-badge i {
+    color: #FFD700;
+}
+
+.no-courses-message {
+    text-align: center;
+    padding: 40px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    color: #6c757d;
+}
+
+.no-courses-message i {
+    font-size: 48px;
+    margin-bottom: 16px;
+    color: #adb5bd;
+}
+
+.start-course-btn {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 8px 24px;
+    background: #FFD700;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.start-course-btn:hover {
+    background: #FFA000;
+}
+
+/* Course List Scrolling */
+.course-list {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Keep course cards in a single row */
+    padding-bottom: 10px; /* Add some padding at the bottom */
+}
+
+.course-scroll-container {
+    display: inline-block; /* Ensure the container fits the content */
+}
+
+.course-scroll {
+    display: flex;
+    gap: 20px; /* Space between course cards */
+}
+
+/* Badge Styles */
+.badge-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;  /* Adjust gap between badges */
+}
+
+.badge-item {
+    width: 70px;  /* Adjust the size of the badge container */
+    height: 70px; /* Make the badge container square */
+    text-align: center;
+    display: flex;
+    justify-content: center;  /* Center the badge image */
+    align-items: center;      /* Center the badge image */
+}
+
+.badge-item img {
+    width: 50px;  /* Adjust badge image width */
+    height: 50px; /* Adjust badge image height */
+    object-fit: cover;  /* Ensure the image maintains its aspect ratio */
+}
+
+/* Completion Statistics */
+.completion-stats {
+    margin: 20px 0;
+}
+
+.stats-card {
+    display: flex;
+    flex-wrap: wrap;
+    background: linear-gradient(135deg,#FFD700,#FFA000 );
+    border-radius: 12px;
+    padding: 20px;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 25px;
+    flex: 1;
+    min-width: 200px;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-item:last-child {
+    border-right: none;
+}
+
+.stat-item i {
+    font-size: 32px;
+    margin-right: 15px;
+    opacity: 0.9;
+}
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.count-badge {
+    display: inline-block;
+    color: white;
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 14px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(3px);
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 6px;
+    padding: 25px;
+    width: 90%;
+    max-width: 450px;
+    max-height: 70vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    border-left: 3px solid #FFD700;
+}
+
+.modal-content h2 {
+    font-size: 18px;
+    margin: 0 0 15px 0;
+    color: #333;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 12px;
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #aaa;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+#review-count {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 5px;
+    font-style: italic;
+}
+
+/* Average Rating in Modal */
+.average-rating {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    gap: 10px;
+}
+
+.rating-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.out-of {
+    font-size: 14px;
+    color: #777;
+}
+
+.stars-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Reviews List */
+#reviews-list {
+    margin-top: 20px;
+}
+
+/* Individual Review Styles */
+.review-item {
+    padding: 15px 0;
+    border-bottom: 1px solid #f5f5f5;
+    margin-bottom: 0;
+}
+
+.review-item:last-child {
+    border-bottom: none;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.review-author {
+    font-weight: 500;
+    color: #444;
+    font-size: 14px;
+}
+
+.review-date {
+    font-size: 11px;
+    color: #999;
+}
+
+.review-rating {
+    color: #FFD700;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.review-text {
+    font-size: 13px;
+    line-height: 1.4;
+    color: #555;
+    font-weight: 400;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .sidebar {
+        width: 60px;
+    }
+
+    .course-card {
+        width: 100%;
+    }
+
+    .stats-card {
+        flex-direction: column;
+    }
+
+    .stat-item {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 15px 0;
+    }
+
+    .stat-item:last-child {
+        border-bottom: none;
+    }
+}
+
+/* Courses in Progress Section */
+.courses-in-progress {
+    margin-top: 30px;
+}
+
+.course-card.in-progress {
+    position: relative;
+    border: 2px solid #FFD700;
+}
+
+.course-card.in-progress .progress-info {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: rgba(144, 238, 144, 0.1);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.course-card.in-progress .start-date,
+.course-card.in-progress .start-time {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.course-card.in-progress .start-time {
+    font-style: italic;
+    color: #666;
+}
+
+.course-card.in-progress .start-time i {
+    color: #888;
+}
+
+.course-card.in-progress .complete-course-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.course-card.in-progress .complete-course-btn:hover {
+    background-color: #45a049;
+}
+
+.completion-info {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: rgba(76, 175, 80, 0.1);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.completion-info > div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.completion-info i {
+    width: 16px;
+    color: #4CAF50;
+}
+
+.completion-date span,
+.completion-time span,
+.completion-duration span {
+    flex: 1;
+}
+
+.completion-time {
+    color: #888;
+    font-style: italic;
+}
+
+.completion-duration i {
+    color: #FFD700;
+}
+
+/* Course Card Styles */
+.course-card.completed {
+    border-left: 4px solid #4CAF50;
+    position: relative;
+}
+
+.progress-info {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: rgba(144, 238, 144, 0.1);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.progress-info .start-date,
+.progress-info .start-time {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.progress-info i {
+    color: #666;
+    width: 16px;
+    text-align: center;
+}
+
+.progress-info .start-time {
+    font-style: italic;
+    color: #666;
+}
+
+.progress-info .start-time i {
+    color: #888;
+}
+
+/* Course Actions Buttons */
+.course-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.continue-learning-btn, 
+.complete-course-btn,
+.review-course-btn {
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: all 0.2s ease;
+}
+
+.continue-learning-btn {
+    background-color: #FFD700;
+    border: none;
+    color: white;
+}
+
+.continue-learning-btn:hover {
+    background-color: #e6c200;
+}
+
+.complete-course-btn {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+}
+
+.complete-course-btn:hover {
+    background-color: #45a049;
+}
+
+.review-course-btn {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+.review-course-btn i {
+    color: #FFD700;
+}
+
+.review-course-btn:hover {
+    background-color: #e6e6e6;
+    border-color: #ccc;
+}
+/* Chatbot Styles - Enhanced */
+edit the css for the chatbot button like the way it looks the small circle /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.dashboard-container {
+    display: flex;
+    width: 100%;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #FFD700; /* Yellow/Honey Color */
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: width 0.3s ease;
+    overflow-x: hidden;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure sidebar is above other content */
+}
+
+.main-content {
+    margin-left: 250px; /* Same as Sidebar Width */
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content.expanded {
+    margin-left: 60px; /* Same as Collapsed Sidebar Width */
+}
+
+/* Header Section */
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #FFD700; /* Yellow/Honey Color */
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.user-info h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333; /* Dark text color */
+}
+
+/* Sections */
+.section {
+    margin-bottom: 20px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.section h2 {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: #333; /* Dark text color */
+}
+
+.leaderboard ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.leaderboard li {
+    padding: 5px 0;
+    color: #333; /* Dark text color */
+}
+
+/* Course Card Styles - UPDATED */
+.course-card {
+    display: inline-block;
+    width: 300px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex !important; /* Override any other display values */
+    flex-direction: column;
+    border-left: 3px solid #eed460;
+    position: relative; /* Added for bookmark button positioning */
+}
+
+.course-card img {
+    width: 100%;
+    height: 150px; /* Fixed height for images */
+    object-fit: cover; /* Ensure images maintain aspect ratio */
+    border-radius: 8px;
+}
+
+.course-details {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 15px 0 0 0;
+    min-height: 0; /* Allow content to shrink if needed */
+}
+
+.course-content {
+    flex: 1;
+    margin-bottom: 15px;
+}
+
+.course-details h3 {
+    margin: 0 0 10px;
+    font-size: 1.1em;
+    color: #333;
+    white-space: normal; /* Allow wrapping */
+}
+
+.course-details p {
+    margin: 0 0 10px;
+    font-size: 0.9em;
+    color: #666;
+    white-space: normal; /* Allow wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+/* Course Meta Information */
+.course-meta {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.course-category,
+.course-level {
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background-color: #e0f7fa;
+}
+
+.course-level.beginner {
+    background-color: #c8e6c9;
+}
+
+.course-level.intermediate {
+    background-color: #fff3e0;
+}
+
+.course-level.advanced {
+    background-color: #ffcdd2;
+}
+
+/* Button Styles - UPDATED */
+.card-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+}
+
+/* Start Learning Button - UPDATED */
+.start-learning-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; /* Match width of Reviews button */
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FFD700;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+    box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.start-learning-button:hover {
+    background-color: #FFA000;
+}
+
+/* Reviews Button - UPDATED */
+.reviews-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 13px;
+    border: 1px solid #e0e0e0;
+    background-color: rgba(255, 215, 0, 0.1);
+    color: #333;
+    width: 100%;
+    transition: all 0.2s ease;
+    margin-top: 2px; /* Add small space between buttons */
+    box-sizing: border-box;
+}
+
+.reviews-btn:hover {
+    background-color: rgba(255, 215, 0, 0.2);
+    border-color: #FFD700;
+}
+
+/* Star Rating Inside Reviews Button */
+.star-rating {
+    display: flex;
+    align-items: center;
+    color: #FFD700;
+}
+
+.star-icon {
+    color: #FFD700; /* Gold star color */
+    margin-right: 4px;
+}
+
+.star-rating i {
+    color: #FFD700; /* Gold color for stars */
+    margin-right: 2px;
+    font-size: 12px;
+}
+
+.star-rating i.far {
+    color: #FFD700; /* Gold but with opacity for empty stars */
+    opacity: 0.3;
+}
+
+.review-count {
+    font-size: 12px;
+    color: #888;
+}
+
+/* Bookmark Button - UPDATED */
+.bookmark-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #666;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bookmark-btn:hover {
+    background: #fff;
+    transform: scale(1.05);
+}
+
+.bookmark-btn .fas {
+    color: #FFD700;
+}
+
+/* Completed Courses Section */
+.completed-courses {
+    margin-top: 20px;
+}
+
+.completed-courses .course-card {
+    border-left: 4px solid #4CAF50;
+    position: relative;
+}
+
+.completion-date {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.completion-date i {
+    color: #4CAF50;
+}
+
+.completion-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9em;
+    margin-top: 10px;
+    color: #666;
+}
+
+.completion-badge i {
+    color: #FFD700;
+}
+
+.no-courses-message {
+    text-align: center;
+    padding: 40px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    color: #6c757d;
+}
+
+.no-courses-message i {
+    font-size: 48px;
+    margin-bottom: 16px;
+    color: #adb5bd;
+}
+
+.start-course-btn {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 8px 24px;
+    background: #FFD700;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.start-course-btn:hover {
+    background: #FFA000;
+}
+
+/* Course List Scrolling */
+.course-list {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Keep course cards in a single row */
+    padding-bottom: 10px; /* Add some padding at the bottom */
+}
+
+.course-scroll-container {
+    display: inline-block; /* Ensure the container fits the content */
+}
+
+.course-scroll {
+    display: flex;
+    gap: 20px; /* Space between course cards */
+}
+
+/* Badge Styles */
+.badge-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;  /* Adjust gap between badges */
+}
+
+.badge-item {
+    width: 70px;  /* Adjust the size of the badge container */
+    height: 70px; /* Make the badge container square */
+    text-align: center;
+    display: flex;
+    justify-content: center;  /* Center the badge image */
+    align-items: center;      /* Center the badge image */
+}
+
+.badge-item img {
+    width: 50px;  /* Adjust badge image width */
+    height: 50px; /* Adjust badge image height */
+    object-fit: cover;  /* Ensure the image maintains its aspect ratio */
+}
+
+/* Completion Statistics */
+.completion-stats {
+    margin: 20px 0;
+}
+
+.stats-card {
+    display: flex;
+    flex-wrap: wrap;
+    background: linear-gradient(135deg,#FFD700,#FFA000 );
+    border-radius: 12px;
+    padding: 20px;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 25px;
+    flex: 1;
+    min-width: 200px;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-item:last-child {
+    border-right: none;
+}
+
+.stat-item i {
+    font-size: 32px;
+    margin-right: 15px;
+    opacity: 0.9;
+}
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.count-badge {
+    display: inline-block;
+    color: white;
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 14px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(3px);
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 6px;
+    padding: 25px;
+    width: 90%;
+    max-width: 450px;
+    max-height: 70vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    border-left: 3px solid #FFD700;
+}
+
+.modal-content h2 {
+    font-size: 18px;
+    margin: 0 0 15px 0;
+    color: #333;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 12px;
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #aaa;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: #333;
+}
+
+#review-count {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 5px;
+    font-style: italic;
+}
+
+/* Average Rating in Modal */
+.average-rating {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    gap: 10px;
+}
+
+.rating-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.out-of {
+    font-size: 14px;
+    color: #777;
+}
+
+.stars-container {
+    display: flex;
+    align-items: center;
+}
+
+/* Reviews List */
+#reviews-list {
+    margin-top: 20px;
+}
+
+/* Individual Review Styles */
+.review-item {
+    padding: 15px 0;
+    border-bottom: 1px solid #f5f5f5;
+    margin-bottom: 0;
+}
+
+.review-item:last-child {
+    border-bottom: none;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.review-author {
+    font-weight: 500;
+    color: #444;
+    font-size: 14px;
+}
+
+.review-date {
+    font-size: 11px;
+    color: #999;
+}
+
+.review-rating {
+    color: #FFD700;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.review-text {
+    font-size: 13px;
+    line-height: 1.4;
+    color: #555;
+    font-weight: 400;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .sidebar {
+        width: 60px;
+    }
+
+    .course-card {
+        width: 100%;
+    }
+
+    .stats-card {
+        flex-direction: column;
+    }
+
+    .stat-item {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 15px 0;
+    }
+
+    .stat-item:last-child {
+        border-bottom: none;
+    }
+}
+
+/* Courses in Progress Section */
+.courses-in-progress {
+    margin-top: 30px;
+}
+
+.course-card.in-progress {
+    position: relative;
+    border: 2px solid #FFD700;
+}
+
+.course-card.in-progress .progress-info {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: rgba(144, 238, 144, 0.1);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.course-card.in-progress .start-date,
+.course-card.in-progress .start-time {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.course-card.in-progress .start-time {
+    font-style: italic;
+    color: #666;
+}
+
+.course-card.in-progress .start-time i {
+    color: #888;
+}
+
+.course-card.in-progress .complete-course-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.course-card.in-progress .complete-course-btn:hover {
+    background-color: #45a049;
+}
+
+.completion-info {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: rgba(76, 175, 80, 0.1);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.completion-info > div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.completion-info i {
+    width: 16px;
+    color: #4CAF50;
+}
+
+.completion-date span,
+.completion-time span,
+.completion-duration span {
+    flex: 1;
+}
+
+.completion-time {
+    color: #888;
+    font-style: italic;
+}
+
+.completion-duration i {
+    color: #FFD700;
+}
+
+/* Course Card Styles */
+.course-card.completed {
+    border-left: 4px solid #4CAF50;
+    position: relative;
+}
+
+.progress-info {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: rgba(144, 238, 144, 0.1);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.progress-info .start-date,
+.progress-info .start-time {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.progress-info i {
+    color: #666;
+    width: 16px;
+    text-align: center;
+}
+
+.progress-info .start-time {
+    font-style: italic;
+    color: #666;
+}
+
+.progress-info .start-time i {
+    color: #888;
+}
+
+/* Course Actions Buttons */
+.course-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.continue-learning-btn,
+.complete-course-btn,
+.review-course-btn {
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: all 0.2s ease;
+}
+
+.continue-learning-btn {
+    background-color: #FFD700;
+    border: none;
+    color: white;
+}
+
+.continue-learning-btn:hover {
+    background-color: #e6c200;
+}
+
+.complete-course-btn {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+}
+
+.complete-course-btn:hover {
+    background-color: #45a049;
+}
+
+.review-course-btn {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    color: #333;
+}
+
+.review-course-btn i {
+    color: #FFD700;
+}
+
+.review-course-btn:hover {
+    background-color: #e6e6e6;
+    border-color: #ccc;
+}
+/* Chatbot Styles - Enhanced */
+#chatbot-popup {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 380px;
+    max-width: 90vw;
+    height: 550px;
+    max-height: 80vh;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    transform: translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+#chatbot-popup.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+}
+
+#chatbot-header {
+    padding: 15px;
+    background: linear-gradient(135deg, #FFD700, #FFA000);
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#chatbot-title {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+}
+
+#chatbot-title i {
+    font-size: 22px;
+}
+
+#chatbot-close-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+#chatbot-close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+#chatbot-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background-color: #f9f9f9;
+    background-image: linear-gradient(rgba(255, 215, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 215, 0, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.chat-message {
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: 18px;
+    line-height: 1.5;
+    margin-bottom: 5px;
+    position: relative;
+    word-wrap: break-word;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-message.user {
+    background: linear-gradient(135deg, #FFD700, #FFA000);
+    color: #fff;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+}
+
+.chat-message.bot {
+    background-color: white;
+    color: #333;
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+    border-left: 3px solid #FFD700;
+}
+
+.chat-message a {
+    color: #FFA000;
+    text-decoration: underline;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.chat-message.user a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.chat-message a:hover {
+    background-color: rgba(255, 215, 0, 0.1);
+    text-decoration: none;
+}
+
+.chat-suggestions {
+    margin-top: 12px;
+    width: 100%;
+    align-self: flex-start;
+}
+
+.suggestions-title {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.suggestion-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.suggestion-chip {
+    background-color: white;
+    color: #333;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.suggestion-chip:hover {
+    background-color: #FFD700;
+    color: white;
+    border-color: #FFD700;
+}
+
+#chatbot-input-container {
+    display: flex;
+    padding: 15px;
+    background-color: white;
+    border-top: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+#chatbot-input {
+    flex: 1;
+    padding: 12px 18px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 25px;
+    outline: none;
+    font-size: 14px;
+    transition: border 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+#chatbot-input:focus {
+    border-color: #FFD700;
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+}
+
+#chatbot-send-btn {
+    background: linear-gradient(135deg, #FFD700, #FFA000);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#chatbot-send-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+#chatbot-send-btn i {
+    font-size: 16px;
+}
+
+#chatbot-toggle-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #FFD700, #FFA000);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 999;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#chatbot-toggle-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Chat course recommendations styling */
+.chatbot-course-recommendations {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.chatbot-course-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-left: 3px solid #FFD700;
+}
+
+.chatbot-course-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.chatbot-course-img {
+    height: 120px;
+    background-size: cover;
+    background-position: center;
+    background-color: #f5f5f5;
+    position: relative;
+}
+
+.chatbot-course-img::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: linear-gradient(to top, rgba(0,0,0,0.2), transparent);
+}
+
+.chatbot-course-content {
+    padding: 15px;
+}
+
+.chatbot-course-content h4 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.chatbot-course-content p {
+    margin: 0 0 12px 0;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.4;
+    max-height: 36px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.chatbot-view-course {
+    display: inline-block;
+    padding: 8px 15px;
+    background: linear-gradient(135deg, #FFD700, #FFA000);
+    color: #fff !important;
+    text-decoration: none !important;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.chatbot-view-course:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+/* Chatbot options styling */
+.chatbot-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.chatbot-option-btn {
+    background-color: white;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: #333;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.chatbot-option-btn:hover {
+    background: linear-gradient(135deg, #FFD700, #FFA000);
+    border-color: #FFD700;
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Typing indicator styling */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px !important;
+    background-color: white;
+    width: auto;
+    max-width: 80px;
+    border-radius: 18px;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    margin-bottom: 5px;
+    position: relative;
+    align-self: flex-start;
+    border-left: 3px solid #FFD700;
+}
+
+.typing-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.typing-dot {
+    width: 8px;
+    height: 8px;
+    margin: 0 2px;
+    background-color: #FFD700;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.6;
+}
+
+.typing-dot:nth-child(1) {
+    animation: typing 1.5s infinite 0.0s;
+}
+.typing-dot:nth-child(2) {
+    animation: typing 1.5s infinite 0.3s;
+}
+.typing-dot:nth-child(3) {
+    animation: typing 1.5s infinite 0.6s;
+}
+
+@keyframes typing {
+    0% { transform: translateY(0px); opacity: 0.6; }
+    25% { transform: translateY(-5px); opacity: 1; }
+    50% { transform: translateY(0px); opacity: 0.6; }
+    100% { transform: translateY(0px); opacity: 0.6; }
+}
+
+/* Loading message styling */
+.loading-message {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px !important;
+    background-color: white;
+    border-radius: 18px;
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    border-left: 3px solid #FFD700;
+    color: #666;
+    font-size: 14px;
+}
+
+.loading-spinner {
+    width: 18px;
+    height: 18px;
+    margin-left: 10px;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+    border-top: 2px solid #FFD700;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    #chatbot-popup {
+        width: 95%;
+        right: 2.5%;
+        height: 70vh;
+        bottom: 80px;
+    }
+
+    #chatbot-toggle-btn {
+        width: 50px;
+        height: 50px;
+    }
+
+    .chatbot-options {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .chatbot-option-btn {
+        width: 100%;
+    }
+}

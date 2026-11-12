@@ -1,0 +1,429 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+}
+
+/* Page Layout */
+.main-content {
+    margin-left: 250px;
+    padding: 0;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    transition: margin-left 0.3s;
+}
+
+/* Header Styling */
+.page-header {
+    background: white;
+    padding: 30px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.header-content h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-content h1 i {
+    color: #FFD700;
+}
+
+.subtitle {
+    margin: 5px 0 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.browse-more-btn {
+    padding: 10px 20px;
+    background-color: #FFD700;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.browse-more-btn:hover {
+    background-color: #e6c200;
+    transform: translateY(-1px);
+}
+
+/* Bookmarks Container */
+.bookmarks-container {
+    padding: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.empty-icon {
+    font-size: 48px;
+    color: #FFD700;
+    margin-bottom: 20px;
+}
+
+.empty-state h2 {
+    margin: 0 0 10px;
+    color: #333;
+}
+
+.empty-state p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.browse-courses-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background-color: #FFD700;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.browse-courses-btn:hover {
+    background-color: #e6c200;
+    transform: translateY(-1px);
+}
+
+/* Course Cards */
+.bookmarks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+.course-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.course-image {
+    position: relative;
+    height: 180px;
+}
+
+.course-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Bookmark Button - Repositioned to top right */
+.bookmark-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #FFD700;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.bookmark-btn:hover {
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.bookmark-btn i.fas {
+    color: #FFD700; /* Gold color for filled bookmark */
+}
+
+.bookmark-btn i.far {
+    color: #FFD700; /* Same gold color for empty bookmark */
+}
+
+.course-info {
+    padding: 20px;
+}
+
+.course-info h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+    color: #333;
+    line-height: 1.4;
+}
+
+.course-info p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Course Meta */
+.course-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.category {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #666;
+    font-size: 14px;
+}
+
+.category i {
+    color: #FFD700;
+}
+
+.level {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.level.beginner {
+    background-color: #e3f9e5;
+    color: #13ce66;
+}
+
+.level.intermediate {
+    background-color: #fff8e6;
+    color: #ffba00;
+}
+
+.level.advanced {
+    background-color: #fee6e3;
+    color: #ff4949;
+}
+
+/* Card Actions - Changed to column layout for full-width buttons */
+.card-actions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Start Learning Button - Full width */
+.start-learning-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #FFD700;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.start-learning-btn:hover {
+    background-color: #e6c200;
+    transform: translateY(-1px);
+}
+
+/* Reviews Button - Full width */
+.review-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 13px;
+    border: 1px solid #e0e0e0;
+    background-color: rgba(255, 215, 0, 0.1);
+    color: #333;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.review-button:hover {
+    background-color: rgba(255, 215, 0, 0.2);
+    border-color: #FFD700;
+}
+
+/* Star Rating Styles */
+.star-rating {
+    display: flex;
+    align-items: center;
+    color: #FFD700;
+    margin-right: 5px;
+}
+
+.star {
+    color: #FFD700; /* Gold color for stars */
+    margin-right: 2px;
+    font-size: 12px;
+}
+
+.empty-star {
+    color: #FFD700; /* Gold but with opacity for empty stars */
+    opacity: 0.3;
+}
+
+/* Bookmark Sidebar */
+.bookmark-sidebar {
+    padding: 15px;
+    text-align: right;
+    cursor: pointer;
+    color: #333;
+    font-size: 24px;
+}
+
+/* Course Buttons (for other sections) */
+.course-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Reviews Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    position: relative;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 24px;
+    color: #888;
+}
+
+.review-item {
+    text-align: left;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.review-author {
+    font-weight: bold;
+}
+
+.review-date {
+    color: #888;
+    font-size: 0.9em;
+}
+
+.review-rating {
+    margin-bottom: 5px;
+}
+
+.review-text {
+    line-height: 1.4;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .bookmarks-container {
+        padding: 15px;
+    }
+
+    .bookmarks-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .course-card {
+        max-width: 100%;
+    }
+}
+
+/* Sidebar Expanded State */
+.main-content.expanded {
+    margin-left: 80px;
+}

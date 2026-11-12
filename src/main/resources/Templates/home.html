@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills Hive Home</title>
+    <link rel="stylesheet" href="/css/home.css"/>
+</head>
+<body>
+<div class="home-container">
+    <!-- Header Section -->
+    <header class="home-header">
+        <!-- Logo -->
+        <div class="logo-container">
+            <img th:src="@{/photos/honeyylogo.png}" alt="Skills Hive Logo" class="home-logo">
+        </div>
+        <!-- Welcome Text -->
+        <div class="welcome-text">
+            <h1>Welcome, <span th:text="${username}">User</span>!</h1>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="home-main">
+        <p>We’re glad to have you back. Explore your courses, track your progress, or discover new skills!</p>
+        <a href="/course" class="primary-button">Go to Courses</a>
+    </main>
+
+    <!-- Footer with Logout -->
+    <footer class="home-footer">
+        <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </footer>
+</div>
+</body>
+</html>

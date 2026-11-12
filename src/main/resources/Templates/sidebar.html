@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Example</title>
+    <link rel="stylesheet" href="/css/sidebar.css">
+</head>
+<body>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <!-- Logo -->
+    <div class="sidebar-logo">
+        <img src="photos/Screenshot%202025-02-10%20at%2016.14.57.png" alt="SYNTHETVB Logo">
+    </div>
+
+    <!-- Toggle Button -->
+    <div class="sidebar-toggle" id="sidebar-toggle"><span>&#9776;</span> <!-- Hamburger Icon --></div>
+
+    <!-- Sidebar Options -->
+    <ul class="sidebar-menu">
+        <li>
+            <a href="home.html"><i class="fas fa-home"></i><span>Dashboard</span></a>
+        </li>
+        <li>
+            <a href="courses.html"><i class="fa-solid fa-book-open"></i><span>Courses</span></a>
+        </li>
+        <li>
+            <a href="#"><i class="fas fa-trophy"></i><span>Leaderboard</span></a>
+        </li>
+        <li><a href="#"><i class="fas fa-users"></i><span>Friends</span></a></li>
+        <li><a href="/hexahive"><i class="fas fa-gamepad"></i><span>HexaHive Game</span></a></li>
+        <li>
+            <a href="#"><i class="fas fa-user"></i><span>User Profile</span></a>
+        </li>
+        <li>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" style="background: none; border: none; cursor: pointer; color: inherit; font: inherit;">
+                    <i class="fas fa-sign-out-alt"></i><span> Log Out</span>
+                </button>
+            </form>
+        </li>
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div id="courses-container" class="course-list"></div>
+
+<!-- Font Awesome for Icons -->
+<script src="https://kit.fontawesome.com/4af7d25044.js" crossorigin="anonymous"></script>
+<!-- JavaScript for Sidebar Toggle and Search -->
+<script src="/script/sidebar.js"></script>
+</body>
+</html>

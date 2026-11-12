@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/bookmark-preview.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <img src="photos/Screenshot%202025-02-10%20at%2016.14.57.png" alt="SYNTHETVB Logo">
+    </div>
+    <div class="sidebar-toggle" id="sidebar-toggle"><span>&#9776;</span></div>
+    <ul class="sidebar-menu">
+        <li><a href="/dashboard"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+        <li><a href="/course"><i class="fa-solid fa-book-open"></i><span>Courses</span></a></li>
+        <li class="bookmark-list-item">
+            <!-- Bookmark Icon -->
+            <div class="bookmark-sidebar" onmouseover="showBookmarkPreview()" onmouseout="hideBookmarkPreview()" onclick="redirectToBookmarks()">
+                <i class="fas fa-bookmark"></i><span> Bookmarks</span>
+            </div>
+            <!-- Bookmark Preview (Initially hidden) -->
+            <div id="bookmark-preview" style="display: none;">
+                <h4>Bookmarked Courses</h4>
+                <ul id="bookmark-preview-list"></ul>
+            </div>
+        </li>
+        <li><a href="/leaderboard"><i class="fas fa-trophy"></i><span>Leaderboard</span></a></li>
+        <li><a href="/friends"><i class="fas fa-users"></i><span>Friends</span></a></li>
+        <li><a href="/hexahive"><i class="fas fa-gamepad"></i><span>HexaHive</span></a></li>
+        <li class="active"><a href="/profile"><i class="fas fa-user"></i><span>User Profile</span></a></li>
+        <li>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" style="background: none; border: none; cursor: pointer; color: inherit; font: inherit;">
+                    <i class="fas fa-sign-out-alt"></i><span> Log Out</span>
+                </button>
+            </form>
+        </li>
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Profile Header -->
+    <div class="profile-hero">
+        <div class="profile-banner"></div>
+        <div class="profile-header">
+            <div class="profile-picture">
+                <img src="/photos/DefaultAvatar.png" alt="Profile Picture">
+            </div>
+            <div class="profile-info">
+                <h1 th:text="${user.username}">Username</h1>
+                <div class="profile-meta">
+                    <span th:text="${user.firstname + ' ' + user.lastname}">Full Name</span>
+                    <span class="skill-level" th:classappend="${user.skillLevel.toLowerCase()}" th:text="${user.skillLevel}">Skill Level</span>
+                </div>
+                <div class="user-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <div class="stat-details">
+                            <div class="stat-value" th:text="${completionCount}">0</div>
+                            <div class="stat-label">Courses Completed</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-details">
+                            <div class="stat-value" th:text="${totalLearningHours}">0</div>
+                            <div class="stat-label">Learning Hours</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-actions">
+                <a href="/profile/edit" class="edit-profile-btn">
+                    <i class="fas fa-edit"></i> Edit Profile
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Content -->
+    <div class="profile-content">
+        <div class="profile-section">
+            <div class="section-header">
+                <h2><i class="fas fa-info-circle"></i> About Me</h2>
+            </div>
+            <div class="section-content">
+                <p class="bio" th:text="${userProfile.bio != null && !userProfile.bio.isEmpty() ? userProfile.bio : 'No bio added yet.'}">
+                    User bio goes here...
+                </p>
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <div class="section-header">
+                <h2><i class="fas fa-tags"></i> Interests</h2>
+            </div>
+            <div class="section-content">
+                <div class="interests-list" th:if="${!userProfile.preferredCourseCategories.isEmpty()}">
+                    <span class="interest-tag" th:each="category : ${userProfile.preferredCourseCategories}" th:text="${category}">Category</span>
+                </div>
+                <p th:if="${userProfile.preferredCourseCategories.isEmpty()}" class="no-data-message">No interests added yet.</p>
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <div class="section-header">
+                <h2><i class="fas fa-award"></i> Achievements</h2>
+            </div>
+            <div class="section-content">
+                <!-- Badges Section -->
+                <div class="badges-grid" th:if="${badges != null && !badges.isEmpty()}">
+                    <div th:each="badge : ${badges}" class="badge-item">
+                        <div class="badge-image">
+                            <img th:src="@{${badge.type != null ? badge.type.imagePath : '/photos/default-badge.png'}}" alt="Badge Image">
+                        </div>
+                        <div class="badge-details">
+                            <h3 th:text="${badge.type != null ? badge.type : 'No Badge'}">Badge Name</h3>
+                            <p>Earned on: <span th:text="${#temporals.format(badge.earnedAt, 'dd MMM yyyy')}">Date</span></p>
+                        </div>
+                    </div>
+                </div>
+                <p th:if="${badges == null || badges.isEmpty()}" class="no-data-message">No achievements earned yet. Complete courses to earn badges!</p>
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <div class="section-header">
+                <h2><i class="fas fa-history"></i> Learning History</h2>
+            </div>
+            <div class="section-content">
+                <!-- Courses in Progress -->
+                <div class="history-section" th:if="${coursesInProgress != null && !coursesInProgress.isEmpty()}">
+                    <h3 class="history-section-title">Courses Started</h3>
+                    <div class="completion-timeline">
+                        <div th:each="inProgress, iterStat : ${coursesInProgress}" th:if="${iterStat.index < 3}" class="timeline-item">
+                            <div class="timeline-icon started">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>Started <span th:text="${courseTitles.get(inProgress.courseId)}">Course Title</span></h3>
+                                <div class="timeline-details">
+                                    <span class="started-date">
+                                        <i class="far fa-calendar-plus"></i> 
+                                        Started: <span th:text="${#temporals.format(inProgress.startTime, 'dd MMM yyyy, hh:mm a')}">Start Date</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${coursesInProgress.size() > 3}" class="view-more-link">
+                        <a href="/profile/learning-history">View more started courses</a>
+                    </div>
+                </div>
+                
+                <!-- Recent Completions -->
+                <div class="history-section" th:if="${completions != null && !completions.isEmpty()}">
+                    <h3 class="history-section-title">Courses Completed</h3>
+                    <div class="completion-timeline">
+                        <div th:each="completion, iterStat : ${completions}" th:if="${iterStat.index < 3}" class="timeline-item">
+                            <div class="timeline-icon completed">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>Completed <span th:text="${courseTitles.get(completion.courseId)}">Course Title</span></h3>
+                                <div class="timeline-details">
+                                    <span class="completion-time">
+                                        <i class="far fa-clock"></i> 
+                                        <span th:text="${completion.durationHours}">0</span>h 
+                                        <span th:text="${completion.durationMinutes}">0</span>m
+                                    </span>
+                                    <span class="started-date">
+                                        <i class="far fa-calendar-plus"></i> 
+                                        Started: <span th:text="${#temporals.format(completion.startTime, 'dd MMM yyyy, hh:mm a')}">Start Date</span>
+                                    </span>
+                                    <span class="completion-date">
+                                        <i class="far fa-calendar-check"></i> 
+                                        Completed: <span th:text="${#temporals.format(completion.completionTime, 'dd MMM yyyy, hh:mm a')}">Completion Date</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${completions.size() > 3}" class="view-more-link">
+
+                    </div>
+                </div>
+                
+                <p th:if="${(completions == null || completions.isEmpty()) && (coursesInProgress == null || coursesInProgress.isEmpty())}" class="no-data-message">No learning activity yet. Start learning to build your history!</p>
+                
+                <div th:if="${(completions != null && !completions.isEmpty()) || (coursesInProgress != null && !coursesInProgress.isEmpty())}" class="view-all-link">
+                    <a href="/profile/learning-history">View all learning history</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for Sidebar Toggle -->
+<script src="/script/sidebar.js"></script>
+<script src="/script/profile.js"></script>
+<script src="/script/bookmark.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Search</title>
+    <link rel="stylesheet" href="/css/course.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/bookmark-preview.css"><!-- Add sidebar CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <!-- Logo -->
+    <div class="sidebar-logo">
+        <img src="photos/Screenshot%202025-02-10%20at%2016.14.57.png" alt="SYNTHETVB Logo">
+    </div>
+
+    <!-- Toggle Button -->
+    <div class="sidebar-toggle" id="sidebar-toggle"><span>&#9776;</span> <!-- Hamburger Icon --></div>
+
+    <!-- Sidebar Options -->
+    <ul class="sidebar-menu">
+        <li><a href="/dashboard"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+        <li class="active"><a href="/course"><i class="fa-solid fa-book-open"></i><span>Courses</span></a></li>
+        <li class="bookmark-list-item">
+            <!-- Bookmark Icon -->
+            <div class="bookmark-sidebar" onmouseover="showBookmarkPreview()" onmouseout="hideBookmarkPreview()" onclick="redirectToBookmarks()">
+                <i class="fas fa-bookmark"></i><span> Bookmarks</span>
+            </div>
+            <!-- Bookmark Preview (Initially hidden) -->
+            <div id="bookmark-preview" style="display: none;">
+                <h4>Bookmarked Courses</h4>
+                <ul id="bookmark-preview-list"></ul>
+            </div>
+        </li>
+
+        <li><a href="/leaderboard"><i class="fas fa-trophy"></i><span>Leaderboard</span></a></li>
+        <li><a href="/friends"><i class="fas fa-users"></i><span>Friends</span></a></li>
+        <li><a href="/hexahive"><i class="fas fa-gamepad"></i><span>HexaHive</span></a></li>
+        <li><a href="/profile"><i class="fas fa-user"></i><span>User Profile</span></a></li>
+        <li>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" style="background: none; border: none; cursor: pointer; color: inherit; font: inherit;">
+                    <i class="fas fa-sign-out-alt"></i><span> Log Out</span>
+                </button>
+            </form>
+        </li>
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main-content" id="main-content">
+    <header>
+        <h1>Course Search</h1>
+        <div id="search-form">
+            <input type="text" id="search-input" placeholder="Search by title or description">
+            <select id="category-filter">
+                <option value="">All Categories</option>
+                <option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
+            </select>
+            <select id="level-filter">
+                <option value="">All Levels</option>
+                <option th:each="level : ${levels}" th:value="${level}" th:text="${level}"></option>
+            </select>
+            <button class="search-button" onclick="searchAndFilterCourses()">Search</button>
+        </div>
+    </header>
+
+    <main>
+        <div id="course-list" class="course-list">
+            <div th:each="course : ${courses}" class="course-card">
+                <button class="bookmark-btn" onclick="toggleBookmark(this)" th:data-course-id="${course.id}">
+                    <i class="far fa-bookmark"></i>
+                </button>
+                <img th:src="@{${course.thumbnail}}" alt="Course Thumbnail">
+                <h2 th:text="${course.title}"></h2>
+                <p th:text="${course.description}"></p>
+                <div class="course-details">
+                    <span th:text="${course.category.name}" class="course-category"></span>
+                    <span th:classappend="${course.level.name == 'Beginner' ? 'beginner' :
+                                      (course.level.name == 'Intermediate' ? 'intermediate' : 'advanced')}"
+                          class="course-level" th:text="${course.level.name}"></span>
+                </div>
+                <div class="course-rating" data-course-id="${course.id}">
+                    <div class="stars-outer">
+                        <div class="stars-inner"></div>
+                    </div>
+                    <span class="review-count" onclick="showReviewsModal(${course.id})">(0 reviews)</span>
+                </div>
+                <a th:href="${course.url}" class="start-learning-button">Start Learning</a>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Reviews Modal (Adding it to ensure it's present) -->
+<div id="reviews-modal-overlay" class="modal-overlay" style="display: none;">
+  <div id="reviews-modal-content" class="modal-content">
+    <span id="reviews-close" class="modal-close">&times;</span>
+    <h2>Course Reviews</h2>
+    <p id="review-count">0 Reviews</p>
+    <div id="reviews-list"></div>
+  </div>
+</div>
+
+<!-- Make sure the Font Awesome is included -->
+<script src="https://kit.fontawesome.com/4af7d25044.js" crossorigin="anonymous"></script>
+<!-- JavaScript files -->
+<script src="/script/sidebar.js"></script>
+<script src="/script/course.js"></script>
+<script src="/script/bookmark.js"></script>
+
+</body>
+</html>

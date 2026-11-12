@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${friendMode} ? 'Friends Leaderboard' : 'Overall Leaderboard'">Leaderboard</title>
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/leaderboard.css">
+    <link rel="stylesheet" href="/css/bookmark-preview.css">
+    <script src="https://kit.fontawesome.com/4af7d25044.js" crossorigin="anonymous"></script>
+    <style>
+        /* Simple inline styles for the leaderboard tabs */
+        .leaderboard-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .leaderboard-tabs a {
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            color: #333;
+        }
+        .leaderboard-tabs a.active {
+            background-color: #FFD700;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <img th:src="@{/photos/Screenshot%202025-02-10%20at%2016.14.57.png}"
+             alt="SYNTHETVB Logo"
+             style="width: 100%; height: auto;">
+    </div>
+    <div class="sidebar-toggle" id="sidebar-toggle"><span>&#9776;</span></div>
+    <ul class="sidebar-menu">
+        <li><a href="/dashboard"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+        <li><a href="/course"><i class="fa-solid fa-book-open"></i><span>Courses</span></a></li>
+        <li class="bookmark-list-item">
+            <!-- Bookmark Icon -->
+            <div class="bookmark-sidebar" onmouseover="showBookmarkPreview()" onmouseout="hideBookmarkPreview()" onclick="redirectToBookmarks()">
+                <i class="fas fa-bookmark"></i><span> Bookmarks</span>
+            </div>
+            <!-- Bookmark Preview (Initially hidden) -->
+            <div id="bookmark-preview" style="display: none;">
+                <h4>Bookmarked Courses</h4>
+                <ul id="bookmark-preview-list"></ul>
+            </div>
+        </li>
+        <li class="active"><a href="/leaderboard"><i class="fas fa-trophy"></i><span>Leaderboard</span></a></li>
+        <li><a href="/friends"><i class="fas fa-users"></i><span>Friends</span></a></li>
+        <li><a href="/hexahive"><i class="fas fa-gamepad"></i><span>HexaHive</span></a></li>
+        <li><a href="/profile"><i class="fas fa-user"></i><span>User Profile</span></a></li>
+        <li>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" style="background: none; border: none; cursor: pointer; color: inherit; font: inherit;">
+                    <i class="fas fa-sign-out-alt"></i><span> Log Out</span>
+                </button>
+            </form>
+        </li>
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main-content" id="main-content">
+    <header>
+        <!-- Leaderboard Tabs -->
+        <div class="leaderboard-tabs">
+            <a href="/leaderboard" th:classappend="${friendMode} ? '' : ' active'">Overall Leaderboard</a>
+            <a href="/leaderboard/friends" th:classappend="${friendMode} ? ' active' : ''">Friends Leaderboard</a>
+        </div>
+    </header>
+    <main>
+        <table>
+            <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Hours Completed</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="entry, iterStat : ${leaderboard}"
+                th:class="${#authentication != null && entry.username == #authentication.name} ? 'highlight' : ''">
+                <td th:text="${iterStat.count}"></td>
+                <td th:text="${entry.username}"></td>
+                <td th:text="${entry.formattedTime}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</div>
+
+<!-- Font Awesome for Icons -->
+<script src="https://kit.fontawesome.com/4af7d25044.js" crossorigin="anonymous"></script>
+<!-- JavaScript for Sidebar Toggle -->
+<script src="/script/sidebar.js"></script>
+<script src="/script/bookmark.js"></script>
+</body>
+</html>

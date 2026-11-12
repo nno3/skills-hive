@@ -1,0 +1,19 @@
+<div class="profile-header">
+    <div class="profile-picture">
+        <img src="/photos/DefaultAvatar.png" alt="Profile Picture">
+    </div>
+    <div class="user-info">
+        <h1 th:text="${user.username}">Username</h1>
+        <div class="user-stats">
+            <div class="stat-item">
+                <i class="fas fa-graduation-cap"></i>
+                <span th:text="${completionCount}">0</span> courses completed
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-clock"></i>
+                <span th:text="${totalLearningHours}">0</span> learning hours
+            </div>
+        </div>
+        <p class="bio" th:text="${userProfile.bio}">User bio goes here...</p>
+    </div>
+</div> 

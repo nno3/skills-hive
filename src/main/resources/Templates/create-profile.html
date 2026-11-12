@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Profile</title>
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/create-profile.css">
+</head>
+<body>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <img th:src="@{/photos/Screenshot 2025-02-10 at 16.14.57.png}" alt="Group Project Logo" style="width: 100%; height: auto;">
+    </div>
+    <div class="sidebar-toggle" id="sidebar-toggle"><span>&#9776;</span></div>
+    <ul class="sidebar-menu">
+        <li><a href="/dashboard"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+        <li><a href="/course"><i class="fa-solid fa-book-open"></i><span>Courses</span></a></li>
+        <li class="bookmark-list-item">
+            <!-- Bookmark Icon -->
+            <div class="bookmark-sidebar" onmouseover="showBookmarkPreview()" onmouseout="hideBookmarkPreview()" onclick="redirectToBookmarks()">
+                <i class="fas fa-bookmark"></i><span> Bookmarks</span>
+            </div>
+            <!-- Bookmark Preview (Initially hidden) -->
+            <div id="bookmark-preview" style="display: none;">
+                <h4>Bookmarked Courses</h4>
+                <ul id="bookmark-preview-list"></ul>
+            </div>
+        </li>
+        <li><a href="/leaderboard"><i class="fas fa-trophy"></i><span>Leaderboard</span></a></li>
+        <li><a href="/friends"><i class="fas fa-users"></i><span>Friends</span></a></li>
+        <li><a href="/hexahive"><i class="fas fa-gamepad"></i><span> HexaHive</span></a></li>
+        <li class="active"><a href="/profile"><i class="fas fa-user"></i><span>User Profile</span></a></li>
+        <li>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" style="background: none; border: none; cursor: pointer; color: inherit; font: inherit;">
+                    <i class="fas fa-sign-out-alt"></i><span> Log Out</span>
+                </button>
+            </form>
+        </li>
+    </ul>
+</div>
+<div class="container">
+    <div class="form-container">
+        <h1>Create Your Profile</h1>
+        <img th:src="@{/photos/DefaultAvatar.png}" alt="User Avatar" class="profile-avatar">
+        <form action="/profile/create" method="post">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+            <label for="bio"><i class="fas fa-info-circle"></i>About me:</label>
+            <textarea id="bio" name="bio" required></textarea>
+
+            <label for="preferredCourses"><i class="fas fa-tags"></i> Preferred Courses:</label>
+            <select id="preferredCourses" name="preferredCourseCategories" multiple required>
+                <option value="AI">AI</option>
+                <option value="Cybersecurity">Cybersecurity</option>
+                <option value="Cloud Computing">Cloud Computing</option>
+                <option value="Data Science">Data Science</option>
+            </select>
+
+            <button type="submit">Create Profile</button>
+        </form>
+    </div>
+</div>
+<script src="/script/sidebar.js"></script>
+<!-- Font Awesome for Icons -->
+<script src="https://kit.fontawesome.com/4af7d25044.js" crossorigin="anonymous"></script>
+</body>
+</html>

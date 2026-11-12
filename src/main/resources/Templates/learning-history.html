@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning History</title>
+    <link rel="stylesheet" href="/css/edit-profile.css">
+    <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/bookmark-preview.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<!-- Sidebar (Keep your existing sidebar code) -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <img src="/photos/Screenshot%202025-02-10%20at%2016.14.57.png" alt="SYNTHETVB Logo">
+    </div>
+    <div class="sidebar-toggle" id="sidebar-toggle"><span>&#9776;</span></div>
+    <ul class="sidebar-menu">
+        <li><a href="/dashboard"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+        <li><a href="/course"><i class="fa-solid fa-book-open"></i><span>Courses</span></a></li>
+        <li class="bookmark-list-item">
+            <!-- Bookmark Icon -->
+            <div class="bookmark-sidebar" onmouseover="showBookmarkPreview()" onmouseout="hideBookmarkPreview()" onclick="redirectToBookmarks()">
+                <i class="fas fa-bookmark"></i><span> Bookmarks</span>
+            </div>
+            <!-- Bookmark Preview (Initially hidden) -->
+            <div id="bookmark-preview" style="display: none;">
+                <h4>Bookmarked Courses</h4>
+                <ul id="bookmark-preview-list"></ul>
+            </div>
+        </li>
+        <li><a href="/leaderboard"><i class="fas fa-trophy"></i><span>Leaderboard</span></a></li>
+        <li><a href="/friends"><i class="fas fa-users"></i><span>Friends</span></a></li>
+        <li><a href="/hexahive"><i class="fas fa-gamepad"></i><span>HexaHive</span></a></li>
+        <li class="active"><a href="/profile"><i class="fas fa-user"></i><span>User Profile</span></a></li>
+        <li>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" style="background: none; border: none; cursor: pointer; color: inherit; font: inherit;">
+                    <i class="fas fa-sign-out-alt"></i><span> Log Out</span>
+                </button>
+            </form>
+        </li>
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="page-header">
+        <h1>Learning History</h1>
+        <div class="header-actions">
+            <a href="/profile" class="back-link"><i class="fas fa-arrow-left"></i> Back to Profile</a>
+        </div>
+    </div>
+
+    <div class="history-container">
+        <div class="history-stats">
+        </div>
+
+        <!-- Courses in Progress -->
+        <div class="history-section" th:if="${!coursesInProgress.isEmpty()}">
+            <h2 class="section-title">Courses Started</h2>
+            <div class="completion-timeline">
+                <div th:each="inProgress : ${coursesInProgress}" class="timeline-item" 
+                     th:attr="data-date=${#temporals.format(inProgress.startTime, 'yyyy-MM-dd HH:mm')},
+                              data-status='in-progress'">
+                    <div class="timeline-icon started">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-date" th:text="${#temporals.format(inProgress.startTime, 'dd MMM yyyy, hh:mm a')}">Date</div>
+                        <h3>Started <span th:text="${courseTitles.get(inProgress.courseId)}">Course Title</span></h3>
+                        <div class="timeline-details">
+                            <div class="started-date">
+                                <i class="far fa-calendar-plus"></i> 
+                                Started: <span th:text="${#temporals.format(inProgress.startTime, 'dd MMM yyyy, hh:mm a')}">Start Date</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Completed Courses -->
+        <div class="history-section" th:if="${!completions.isEmpty()}">
+            <h2 class="section-title">Courses Completed</h2>
+            <div class="completion-timeline">
+                <div th:each="completion : ${completions}" class="timeline-item" 
+                     th:attr="data-date=${#temporals.format(completion.completionTime, 'yyyy-MM-dd HH:mm')},
+                              data-duration=${completion.durationHours + completion.durationMinutes/60},
+                              data-status='completed'">
+                    <div class="timeline-icon completed">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-date" th:text="${#temporals.format(completion.completionTime, 'dd MMM yyyy, hh:mm a')}">Date</div>
+                        <h3>Completed <span th:text="${courseTitles.get(completion.courseId)}">Course Title</span></h3>
+                        <div class="timeline-details">
+                            <div class="completion-time">
+                                <i class="far fa-clock"></i> 
+                                <span th:text="${completion.durationHours}">0</span>h 
+                                <span th:text="${completion.durationMinutes}">0</span>m
+                            </div>
+                            <div class="started-date">
+                                <i class="far fa-calendar-plus"></i> 
+                                Started: <span th:text="${#temporals.format(completion.startTime, 'dd MMM yyyy, hh:mm a')}">Start Date</span>
+                            </div>
+                            <div class="completion-date">
+                                <i class="far fa-calendar-check"></i> 
+                                Completed: <span th:text="${#temporals.format(completion.completionTime, 'dd MMM yyyy, hh:mm a')}">Completion Date</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div th:if="${completions.isEmpty() && coursesInProgress.isEmpty()}" class="no-history-message">
+            <i class="fas fa-history"></i>
+            <p>You haven't started any courses yet. Start learning to build your history!</p>
+            <a href="/course" class="explore-courses-btn">Explore Courses</a>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script src="/script/sidebar.js"></script>
+<script src="/script/learning-history.js"></script>
+<script src="/script/bookmark.js"></script>
+</body>
+</html> 

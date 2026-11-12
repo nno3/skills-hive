@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>HexaHive - Level Selection</title>
+    <link rel="stylesheet" href="/css/game.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>HexaHive</h1>
+        <div class="levels-grid">
+            <div th:each="level : ${levels}" 
+                 class="level-card" 
+                 th:classappend="${!level.isUnlocked} ? 'locked'">
+                <h2>Level [[${level.level}]]</h2>
+                <div class="level-info">
+                    <p>Required Hours: [[${level.requiredHours}]]</p>
+                    <p>High Score: [[${level.highScore}]]</p>
+                </div>
+                <a th:if="${level.isUnlocked}" 
+                   th:href="@{/hexahive/play/{level}(level=${level.level})}" 
+                   class="play-button">Play</a>
+                <div th:if="${!level.isUnlocked}" class="locked-message">
+                    Complete [[${level.requiredHours}]] hours to unlock
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

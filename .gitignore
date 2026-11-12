@@ -1,0 +1,7 @@
+.DS_Store
+.gradle/
+.idea/
+build/
+__pycache__/
+*.class
+src/main/resources/application.properties

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends</title>
+    <link rel="stylesheet" href="/css/friends.css">
+    <link rel="stylesheet" href="/css/sidebar.css">
+    <link rel="stylesheet" href="/css/bookmark-preview.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <!-- Logo -->
+    <div class="sidebar-logo">
+        <img src="photos/Screenshot%202025-02-10%20at%2016.14.57.png" alt="SYNTHETVB Logo">
+    </div>
+    <!-- Toggle Button -->
+    <div class="sidebar-toggle" id="sidebar-toggle">
+        <span>&#9776;</span>
+    </div>
+    <!-- Sidebar Options -->
+    <ul class="sidebar-menu">
+        <li>
+            <a href="/dashboard"><i class="fas fa-home"></i><span>Dashboard</span></a>
+        </li>
+        <li>
+            <a href="/course"><i class="fa-solid fa-book-open"></i><span>Courses</span></a>
+        </li>
+        <li class="bookmark-list-item">
+            <!-- Bookmark Icon -->
+            <div class="bookmark-sidebar" onmouseover="showBookmarkPreview()" onmouseout="hideBookmarkPreview()" onclick="redirectToBookmarks()">
+                <i class="fas fa-bookmark"></i><span> Bookmarks</span>
+            </div>
+            <!-- Bookmark Preview (Initially hidden) -->
+            <div id="bookmark-preview" style="display: none;">
+                <h4>Bookmarked Courses</h4>
+                <ul id="bookmark-preview-list"></ul>
+            </div>
+        </li>
+        <li>
+            <a href="/leaderboard"><i class="fas fa-trophy"></i><span>Leaderboard</span></a>
+        </li>
+        <li class="active">
+            <a href="/friends"><i class="fas fa-users"></i><span>Friends</span></a>
+        </li>
+        <li>
+            <a href="/hexahive"><i class="fas fa-gamepad"></i><span>HexaHive</span></a>
+        </li>
+        <li>
+            <a href="/profile"><i class="fas fa-user"></i><span>User Profile</span></a>
+        </li>
+        <li>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" style="background: none; border: none; cursor: pointer; color: inherit; font: inherit;">
+                    <i class="fas fa-sign-out-alt"></i><span> Log Out</span>
+                </button>
+            </form>
+        </li>
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main-content" id="main-content">
+    <header>
+        <h1>Friends</h1>
+        <!-- Friend Search -->
+        <div id="friend-search">
+            <input type="text" id="search-input" placeholder="Search friends">
+            <button onclick="searchFriends()">Search</button>
+            <div id="search-dropdown" class="dropdown"></div>
+        </div>
+    </header>
+    <main>
+        <!-- Send Friend Request Section -->
+        <section id="send-request">
+            <h2>Add a Friend</h2>
+            <form id="add-friend-form" th:action="@{/friends/request}" method="post" onsubmit="handleFriendRequest(event)">
+                <div class="search-container">
+                    <input type="text"
+                           id="add-friend-input"
+                           name="recipientUsername"
+                           placeholder="Search for users to add"
+                           autocomplete="off"
+                           required
+                           maxlength="30"
+                           title="Username should only contain letters, numbers, underscores, or hyphens, and be 3-20 characters long.">
+                    <div id="add-friend-dropdown" class="dropdown"></div>
+                </div>
+                <button type="submit">Send Friend Request</button>
+            </form>
+            <!-- Error Message Display -->
+            <div id="form-error-message" style="color: red; display: none;">
+                Please correct the highlighted errors before submitting.
+            </div>
+            <div id="request-status-message" class="status-message"></div>
+        </section>
+
+        <!-- Pending Friend Requests Section -->
+        <section id="pending-requests">
+            <h2>Pending Friend Requests</h2>
+            <div th:if="${#lists.isEmpty(pendingRequests)}">
+                <p>No pending friend requests.</p>
+            </div>
+            <div th:each="request : ${pendingRequests}">
+                <div class="friend-request-card">
+                    <p th:text="${request.requester.username}">Requester Username</p>
+                    <div class="friend-request-actions">
+                        <button th:onclick="'acceptFriend(' + ${request.id} + ')'">Accept</button>
+                        <button th:onclick="'declineFriend(' + ${request.id} + ')'">Decline</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Current Friends Section -->
+        <section id="current-friends">
+            <h2>Your Friends</h2>
+            <div th:if="${#lists.isEmpty(friends)}">
+                <p>You have no friends yet.</p>
+            </div>
+            <div id="friend-cards-container">
+                <div th:each="friend : ${friends}" class="friend-card">
+                    <!-- Bee Button -->
+                    <span class="bee-button" onclick="showFriendSummary('${friend.username}')">🐝</span>
+                    <p th:text="${friend.username}" >Friend Username</p>
+                    <!-- Remove button added to each friend card -->
+                    <button class="remove-friend-btn"
+                            th:attr="onclick='removeFriend(\'' + ${friend.username} + '\')'">
+                        Remove
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Font Awesome for Icons -->
+<script src="https://kit.fontawesome.com/4af7d25044.js" crossorigin="anonymous"></script>
+<!-- JavaScript for Sidebar Toggle -->
+<script src="/script/sidebar.js"></script>
+<!-- JavaScript for Friend Actions and Search -->
+<script src="/script/friends.js"></script>
+
+
+<!-- Friend Summary Modal -->
+<div id="friend-summary-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Profile Highlights for <span id="friend-name"></span></h2>
+        <div class="summary-content">
+            <div class="summary-item">
+                <h3>Bio</h3>
+                <p id="summary-bio">No bio available</p>
+            </div>
+            <div class="summary-item">
+                <h3>Total Hours Completed</h3>
+                <p><span id="summary-total-hours">0</span> hours</p>
+            </div>
+            <div class="summary-item">
+                <h3>Highest HexaHive Score</h3>
+                <p><span id="summary-high-score">0</span> points</p>
+            </div>
+            <div class="summary-item">
+                <h3>Badges Earned</h3>
+                <div id="summary-badges" class="badges-container"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/script/bookmark.js"></script>
+</body>
+</html>
