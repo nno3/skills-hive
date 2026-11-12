@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><script src="/skills-hive/tester-static.js"></script>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends</title>
+    <link rel="stylesheet" href="/skills-hive/css/friends.css">
+    <link rel="stylesheet" href="/skills-hive/css/sidebar.css">
+    <link rel="stylesheet" href="/skills-hive/css/bookmark-preview.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<style>
+#tester-banner{position:sticky;top:0;z-index:10000;background:#3d3200;color:#fff8dc;text-align:center;padding:10px 16px;font-family:Poppins,sans-serif;font-size:14px;line-height:1.4}
+#tester-banner strong{color:#FFD700}
+</style>
+<div id="tester-banner"><strong>Tester account.</strong> This is sample data, so you can look around without registering.</div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <!-- Logo -->
+    <div class="sidebar-logo">
+        <img src="/skills-hive/photos/Screenshot%202025-02-10%20at%2016.14.57.png" alt="SYNTHETVB Logo">
+    </div>
+    <!-- Toggle Button -->
+    <div class="sidebar-toggle" id="sidebar-toggle">
+        <span>&#9776;</span>
+    </div>
+    <!-- Sidebar Options -->
+    <ul class="sidebar-menu">
+        <li>
+            <a href="/skills-hive/dashboard/"><i class="fas fa-home"></i><span>Dashboard</span></a>
+        </li>
+        <li>
+            <a href="/skills-hive/course/"><i class="fa-solid fa-book-open"></i><span>Courses</span></a>
+        </li>
+        <li class="bookmark-list-item">
+            <!-- Bookmark Icon -->
+            <div class="bookmark-sidebar" onmouseover="showBookmarkPreview()" onmouseout="hideBookmarkPreview()" onclick="redirectToBookmarks()">
+                <i class="fas fa-bookmark"></i><span> Bookmarks</span>
+            </div>
+            <!-- Bookmark Preview (Initially hidden) -->
+            <div id="bookmark-preview" style="display: none;">
+                <h4>Bookmarked Courses</h4>
+                <ul id="bookmark-preview-list"></ul>
+            </div>
+        </li>
+        <li>
+            <a href="/skills-hive/leaderboard/"><i class="fas fa-trophy"></i><span>Leaderboard</span></a>
+        </li>
+        <li class="active">
+            <a href="/skills-hive/friends/"><i class="fas fa-users"></i><span>Friends</span></a>
+        </li>
+        <li>
+            <a href="/skills-hive/hexahive/"><i class="fas fa-gamepad"></i><span>HexaHive</span></a>
+        </li>
+        <li>
+            <a href="/skills-hive/profile/"><i class="fas fa-user"></i><span>User Profile</span></a>
+        </li>
+        <li>
+            <form action="/skills-hive/" method="post" style="display: inline;">
+                <button type="submit" style="background: none; border: none; cursor: pointer; color: inherit; font: inherit;">
+                    <i class="fas fa-sign-out-alt"></i><span> Log Out</span>
+                </button>
+            </form>
+        </li>
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main-content" id="main-content">
+    <header>
+        <h1>Friends</h1>
+        <!-- Friend Search -->
+        <div id="friend-search">
+            <input type="text" id="search-input" placeholder="Search friends">
+            <button onclick="searchFriends()">Search</button>
+            <div id="search-dropdown" class="dropdown"></div>
+        </div>
+    </header>
+    <main>
+        <!-- Send Friend Request Section -->
+        <section id="send-request">
+            <h2>Add a Friend</h2>
+            <form id="add-friend-form" action="/skills-hive/friends/request/" method="post" onsubmit="handleFriendRequest(event)">
+                <div class="search-container">
+                    <input type="text"
+                           id="add-friend-input"
+                           name="recipientUsername"
+                           placeholder="Search for users to add"
+                           autocomplete="off"
+                           required
+                           maxlength="30"
+                           title="Username should only contain letters, numbers, underscores, or hyphens, and be 3-20 characters long.">
+                    <div id="add-friend-dropdown" class="dropdown"></div>
+                </div>
+                <button type="submit">Send Friend Request</button>
+            </form>
+            <!-- Error Message Display -->
+            <div id="form-error-message" style="color: red; display: none;">
+                Please correct the highlighted errors before submitting.
+            </div>
+            <div id="request-status-message" class="status-message"></div>
+        </section>
+
+        <!-- Pending Friend Requests Section -->
+        <section id="pending-requests">
+            <h2>Pending Friend Requests</h2><div class="friend-request-card"><p>james</p>
+                <div class="friend-request-actions">
+                <button type="button" onclick="acceptFriend(1)">Accept</button>
+                <button type="button" onclick="declineFriend(1)">Decline</button>
+                </div></div>
+            
+            
+        </section>
+
+
+        <!-- Current Friends Section -->
+        <section id="current-friends">
+            <h2>Your Friends</h2>
+            
+            <div id="friend-cards-container"><div class="friend-card">
+                <span class="bee-button" onclick="showFriendSummary('amira')">🐝</span>
+                <p>amira</p>
+                <button type="button" class="remove-friend-btn" onclick="removeFriend('amira')">Remove</button>
+                </div><div class="friend-card">
+                <span class="bee-button" onclick="showFriendSummary('leila')">🐝</span>
+                <p>leila</p>
+                <button type="button" class="remove-friend-btn" onclick="removeFriend('leila')">Remove</button>
+                </div>
+                
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Font Awesome for Icons -->
+<script src="https://kit.fontawesome.com/4af7d25044.js" crossorigin="anonymous"></script>
+<!-- JavaScript for Sidebar Toggle -->
+<script src="/skills-hive/script/sidebar.js"></script>
+<!-- JavaScript for Friend Actions and Search -->
+<script src="/skills-hive/script/friends.js"></script>
+
+
+<!-- Friend Summary Modal -->
+<div id="friend-summary-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Profile Highlights for <span id="friend-name"></span></h2>
+        <div class="summary-content">
+            <div class="summary-item">
+                <h3>Bio</h3>
+                <p id="summary-bio">No bio available</p>
+            </div>
+            <div class="summary-item">
+                <h3>Total Hours Completed</h3>
+                <p><span id="summary-total-hours">0</span> hours</p>
+            </div>
+            <div class="summary-item">
+                <h3>Highest HexaHive Score</h3>
+                <p><span id="summary-high-score">0</span> points</p>
+            </div>
+            <div class="summary-item">
+                <h3>Badges Earned</h3>
+                <div id="summary-badges" class="badges-container"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/skills-hive/script/bookmark.js"></script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><script src="/skills-hive/tester-static.js"></script>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HexaHive Game</title>
+    <link rel="stylesheet" href="/skills-hive/css/sidebar.css">
+    <link rel="stylesheet" href="/skills-hive/css/game.css">
+    <link rel="stylesheet" href="/skills-hive/css/bookmark-preview.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-yH2IwzKeEPOB4c7EJClmm6OQ6E3jGq+JvDFgKhQlG7RJ2wY8zI8pr3UwH6XURHBBM3TgMU8cWZz6hKcUGI+xMw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Confetti library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+<style>
+#tester-banner{position:sticky;top:0;z-index:10000;background:#3d3200;color:#fff8dc;text-align:center;padding:10px 16px;font-family:Poppins,sans-serif;font-size:14px;line-height:1.4}
+#tester-banner strong{color:#FFD700}
+</style>
+<div id="tester-banner"><strong>Tester account.</strong> This is sample data, so you can look around without registering.</div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <img src="/skills-hive/photos/Screenshot%202025-02-10%20at%2016.14.57.png" alt="SYNTHETVB Logo">
+    </div>
+    <div class="sidebar-toggle" id="sidebar-toggle"><span>&#9776;</span></div>
+    <ul class="sidebar-menu">
+        <li><a href="/skills-hive/dashboard/"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+        <li><a href="/skills-hive/course/"><i class="fa-solid fa-book-open"></i><span>Courses</span></a></li>
+        <li class="bookmark-list-item">
+            <!-- Bookmark Icon -->
+            <div class="bookmark-sidebar" onmouseover="showBookmarkPreview()" onmouseout="hideBookmarkPreview()" onclick="redirectToBookmarks()">
+                <i class="fas fa-bookmark"></i><span> Bookmarks</span>
+            </div>
+            <!-- Bookmark Preview (Initially hidden) -->
+            <div id="bookmark-preview" style="display: none;">
+                <h4>Bookmarked Courses</h4>
+                <ul id="bookmark-preview-list"></ul>
+            </div>
+        </li>
+        <li><a href="/skills-hive/leaderboard/"><i class="fas fa-trophy"></i><span>Leaderboard</span></a></li>
+        <li><a href="/skills-hive/friends/"><i class="fas fa-users"></i><span>Friends</span></a></li>
+        <li class="active"><a href="/skills-hive/hexahive/" class="active"><i class="fas fa-gamepad"></i><span>HexaHive</span></a></li>
+        <li><a href="/skills-hive/profile/"><i class="fas fa-user"></i><span>User Profile</span></a></li>
+        <li>
+            <form action="/skills-hive/" method="post" style="display: inline;">
+                <button type="submit" style="background: none; border: none; cursor: pointer; color: inherit; font: inherit;">
+                    <i class="fas fa-sign-out-alt"></i><span> Log Out</span>
+                </button>
+            </form>
+        </li>
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="game-container">
+        <!-- Bee Animation Container -->
+        <div class="bee-container">
+            <div class="bee"></div>
+            <div class="bee" style="left: 50px; animation-delay: 2s;"></div>
+            <div class="bee" style="left: 100px; animation-delay: 4s;"></div>
+        </div>
+
+        <div class="game-header">
+            <h1>HexaHive</h1>
+            <div class="game-info">
+                <!-- Left column (unchanged) -->
+                <div class="level-info">
+                    <p>Hours Completed: <span >25</span></p>
+                    <p>Available Levels: <span >3</span>/4</p>
+                </div>
+
+                <!-- Right column (unchanged) -->
+                <div class="score-info">
+                    <p>Current Score: <span id="currentScore">0</span></p>
+                    <p>Best Score: <span id="summary-high-score" >2400</span></p>
+                </div>
+
+                <!-- Absolutely positioned pause button, visually in the middle -->
+                <button id="pauseButton" class="hidden" onclick="togglePause()">
+                    <i class="fas fa-pause"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Collapsible Instructions Section -->
+        <button class="collapsible" id="instructionsButton" th:if="${!gameStarted}">How to Play HexaHive</button>
+        <div class="content" id="instructionsContent">
+            <h4>Game Overview</h4>
+            <p>HexaHive is a puzzle game where you control hexagonal pieces and arrange them on a grid. The goal is to complete full rows of hexagons to clear them and earn points. As you progress, the game becomes faster and more challenging. Avoid filling the grid to the top, or the game will end!</p>
+
+            <h4>Controls</h4>
+            <ul>
+                <li><strong>Arrow Left</strong>: Move the current piece to the left.</li>
+                <li><strong>Arrow Right</strong>: Move the current piece to the right.</li>
+                <li><strong>Arrow Down</strong>: Move the current piece down faster (soft drop).</li>
+                <li><strong>Arrow Up</strong>: Rotate the current piece.</li>
+                <li><strong>Space Bar</strong>: Instantly drop the piece to the bottom (hard drop).</li>
+                <li><strong>P</strong>: Pause or resume the game.</li>
+            </ul>
+
+            <h4>Scoring</h4>
+            <ul>
+                <li><strong>Soft Drop</strong>: 1 point per step.</li>
+                <li><strong>Hard Drop</strong>: 2 points per step.</li>
+                <li><strong>Clearing Lines</strong>:
+                    <ul>
+                        <li>1 line: 100 points × level</li>
+                        <li>2 lines: 300 points × level</li>
+                        <li>3 lines: 500 points × level</li>
+                        <li>4 lines: 800 points × level</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4>Tips and Strategies</h4>
+            <ul>
+                <li>Plan ahead and arrange pieces to clear multiple lines at once.</li>
+                <li>Use rotation to fit pieces into tight spaces.</li>
+                <li>Use the soft drop (<strong>Arrow Down</strong>) to position pieces accurately.</li>
+                <li>Use the hard drop (<strong>Space Bar</strong>) to quickly place pieces when you're sure of their position.</li>
+            </ul>
+        </div>
+
+        <!-- Level Selection Section -->
+        <div class="level-selection" th:if="${!gameStarted}">
+            <h2>Select Level</h2>
+            <div class="level-grid"><div class="level-card unlocked"><h3>Level 1</h3><p>Beginner (0-10 hours)</p><button type="button" onclick="startGame(1)">Play Level</button></div><div class="level-card unlocked"><h3>Level 2</h3><p>Intermediate (10-20 hours)</p><button type="button" onclick="startGame(2)">Play Level</button></div><div class="level-card unlocked"><h3>Level 3</h3><p>Advanced (20-30 hours)</p><button type="button" onclick="startGame(3)">Play Level</button></div><div class="level-card locked"><h3>Level 4</h3><p>Expert (30+ hours)</p><div class="locked-message">Complete more courses to unlock!</div></div>
+                
+            </div>
+        </div>
+
+        <canvas id="gameCanvas" class="hidden"></canvas>
+
+        <!-- Game Over Container -->
+        <div id="gameOver" class="hidden">
+            <div class="game-over-content">
+                <div class="bee-border">
+                    <div class="back-arrow" onclick="backToLevels()">
+                        <i class="fas fa-arrow-left"></i>
+                        <span class="tooltip">Back to Levels</span>
+                    </div>
+                    <div class="sad-bee">🐝</div>
+                    <h2>Game Over!</h2>
+                    <div class="scores-container">
+                        <p class="final-score">Your Score: <span id="finalScore">0</span></p>
+                        <p class="best-score">Best Score: <span id="gameOverBestScore">0</span></p>
+                    </div>
+                    <div class="honeycomb-separator">
+                        <span>⬡</span><span>⬡</span><span>⬡</span>
+                    </div>
+                    <p id="motivationalMessage" class="motivational-message"></p>
+                    <div class="game-over-buttons">
+                        <button onclick="restartGame()" class="restart-btn">
+                            <i class="fas fa-redo-alt"></i> Try Again
+                        </button>
+                        <button onclick="backToDashboard()" class="dashboard-btn">
+                            <i class="fas fa-book-open"></i> Back to Learning
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Celebration Popup for New High Score -->
+        <div id="celebrationPopup" class="celebration-popup hidden">
+            <div class="celebration-content">
+                <div class="dancing-bee">
+                    <span class="bee-icon">🐝</span>
+                </div>
+                <h2>CONGRATULATIONS!</h2>
+                <p>You've achieved a new personal best!</p>
+                <div class="score" id="celebrationScore">0</div>
+                <button onclick="closeCelebration()">Continue</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pop-up -->
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Pop-up -->
+    <div id="gamePopup" class="popup">
+        <div class="popup-content">
+            <h2>Welcome to HexaHive!</h2>
+            <p>Need a quick break from learning? HexaHive is the perfect way to recharge your mind with a fun and engaging puzzle challenge! Arrange hexagonal pieces to clear rows, earn points, and keep up as the game speeds up. It's a great way to take a short, enjoyable break before diving back into learning.</p>
+            <button id="getStartedButton"> Ready to play?</button>
+        </div>
+
+    </div>
+</div>
+<!-- Font Awesome -->
+<script src="https://kit.fontawesome.com/4af7d25044.js" crossorigin="anonymous"></script>
+<!-- Game Scripts -->
+<script src="/skills-hive/script/hexahive.js"></script>
+<script src="/skills-hive/script/sidebar.js"></script>
+<script src="/skills-hive/script/bookmark.js"></script>
+</body>
+</html>

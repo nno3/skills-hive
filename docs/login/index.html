@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><script src="/skills-hive/tester-static.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills Hive Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/skills-hive/css/login.css?v=3">
+</head>
+<body>
+<div class="login-card">
+    <!-- Welcome Side -->
+    <div class="welcome-side">
+        <div class="logo-container">
+            <img src="/skills-hive/photos/Screenshot 2025-02-10 at 16.14.57.png" alt="Skills Hive Logo">
+        </div>
+        <h1>Welcome Back!</h1>
+        <p>Please login to continue.</p>
+    </div>
+
+    <!-- Form Side -->
+    <div class="form-side">
+        <!-- Display error message if login fails -->
+        
+
+        <!-- Display success message after logout -->
+        
+
+        <!-- Add this where you display other messages (if not already there) -->
+        
+
+        <h2>Skills Hive</h2>
+        <form action="/skills-hive/" method="post">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Enter your Username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your Password" required>
+            </div>
+            <button type="submit" class="login-button">Login</button>
+        </form>
+
+        <p class="tester-disclaimer">This is a tester account. It is already filled with sample courses, friends, and scores, so you can look around without registering.</p>
+        <a class="tester-button" href="/skills-hive/dashboard/">Continue as tester</a>
+
+        <!-- Forgot Password Link -->
+        <p class="form-footer">
+            <a href="/skills-hive/forgot-password/">Forgot Password?</a>
+        </p>
+
+        <!-- Register Link -->
+        <p class="form-footer">
+            Don't have an account? <a href="/skills-hive/register/">Register</a> here.
+        </p>
+    </div>
+</div>
+</body>
+</html>

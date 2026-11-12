@@ -6,13 +6,15 @@ This was a group project. I led the group and built part of it.
 
 Live page: https://nno3.github.io/skills-hive/
 
-## Look around without registering
+Open that link and choose **Continue as tester**. The tester account is already filled with sample courses, friends, and scores.
+
+## Run the same preview on your computer
 
 ```bash
 python3 preview_server.py
 ```
 
-Open http://127.0.0.1:8895/login and choose **Continue as tester**. The tester account is already filled with sample courses, friends, and scores.
+Then open http://127.0.0.1:8895/login.
 
 ## Run the Spring app
 

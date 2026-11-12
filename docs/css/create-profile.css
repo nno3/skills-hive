@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    background: #f5f5f5;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding-left: 250px;
+    transition: padding-left 0.3s ease;
+    width: 100%;
+}
+
+.form-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 50px;
+    width: 100%;
+    max-width: 800px; /* Increased from 600px */
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 32px; /* Increased from 28px */
+    margin-bottom: 30px; /* Increased from 20px */
+    text-align: center;
+}
+
+.profile-avatar {
+    width: 180px; /* Increased from 150px */
+    height: 180px; /* Increased from 150px */
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto 30px; /* Increased bottom margin */
+    border: 4px solid #FFCC00; /* Increased from 3px */
+}
+
+label {
+    display: block;
+    margin-bottom: 10px; /* Increased from 8px */
+    font-weight: 500;
+    color: #333;
+    font-size: 16px; /* Added font size */
+}
+
+textarea, select {
+    width: 100%;
+    padding: 15px; /* Increased from 12px */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px; /* Increased from 14px */
+    margin-bottom: 25px; /* Increased from 20px */
+}
+
+button {
+    width: 100%;
+    padding: 15px; /* Increased from 12px */
+    background: #FFCC00;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 18px; /* Increased from 16px */
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background: #e6b800;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding-left: 0;
+    }
+
+    .form-container {
+        padding: 30px;
+        max-width: 95%;
+    }
+}
+.section-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.section-header label {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: #333;
+    font-weight: 500;
+}
+
+.section-header label i {
+    margin-right: 10px;
+    color: #FFD700;
+    font-size: 18px; /* Match icon size */
+}
+
+
+.form-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+    overflow: hidden;
+    padding: 20px;
+}
+/* Update icon styling */
+label i {
+    margin-right: 15px;
+    color: #FFD700;
+    font-size: 18px;
+}
+
+
+#bio + label i,
+#preferredCourses + label i {
+    margin-right: 15px;
+    color: #FFD700;
+}

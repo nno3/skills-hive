@@ -1,0 +1,89 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Header Styles */
+header {
+    background-color: white;
+    padding: 20px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.69);
+    border-bottom: 1px solid #ddd;
+}
+
+/* Main Content Styles */
+main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Leaderboard Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    font-size: 16px;
+}
+
+th {
+    background-color: #FFD700;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+td {
+    color: #555;
+}
+
+/* Remove the last border from the table rows */
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* Highlight on hover */
+tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Hours Completed Column - Formatting */
+td:nth-child(3) {
+    font-weight: bold;
+    color: #333;
+}
+
+
+/* Highlight the current user's row */
+tr.highlight {
+    background-color: rgba(255, 230, 126, 0.35); /* Light blue background */
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.77); /* Dark teal text */
+
+}
+
+.leaderboard-tabs{
+    font-size: 1.2em;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    th, td {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+}

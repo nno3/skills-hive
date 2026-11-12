@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head><script src="/skills-hive/tester-static.js"></script>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${friendMode} ? 'Friends Leaderboard' : 'Overall Leaderboard'">Leaderboard</title>
+    <link rel="stylesheet" href="/skills-hive/css/sidebar.css">
+    <link rel="stylesheet" href="/skills-hive/css/leaderboard.css">
+    <link rel="stylesheet" href="/skills-hive/css/bookmark-preview.css">
+    <script src="https://kit.fontawesome.com/4af7d25044.js" crossorigin="anonymous"></script>
+    <style>
+        /* Simple inline styles for the leaderboard tabs */
+        .leaderboard-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .leaderboard-tabs a {
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            color: #333;
+        }
+        .leaderboard-tabs a.active {
+            background-color: #FFD700;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<style>
+#tester-banner{position:sticky;top:0;z-index:10000;background:#3d3200;color:#fff8dc;text-align:center;padding:10px 16px;font-family:Poppins,sans-serif;font-size:14px;line-height:1.4}
+#tester-banner strong{color:#FFD700}
+</style>
+<div id="tester-banner"><strong>Tester account.</strong> This is sample data, so you can look around without registering.</div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <img src="/skills-hive/photos/Screenshot%202025-02-10%20at%2016.14.57.png"
+             alt="SYNTHETVB Logo"
+             style="width: 100%; height: auto;">
+    </div>
+    <div class="sidebar-toggle" id="sidebar-toggle"><span>&#9776;</span></div>
+    <ul class="sidebar-menu">
+        <li><a href="/skills-hive/dashboard/"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+        <li><a href="/skills-hive/course/"><i class="fa-solid fa-book-open"></i><span>Courses</span></a></li>
+        <li class="bookmark-list-item">
+            <!-- Bookmark Icon -->
+            <div class="bookmark-sidebar" onmouseover="showBookmarkPreview()" onmouseout="hideBookmarkPreview()" onclick="redirectToBookmarks()">
+                <i class="fas fa-bookmark"></i><span> Bookmarks</span>
+            </div>
+            <!-- Bookmark Preview (Initially hidden) -->
+            <div id="bookmark-preview" style="display: none;">
+                <h4>Bookmarked Courses</h4>
+                <ul id="bookmark-preview-list"></ul>
+            </div>
+        </li>
+        <li class="active"><a href="/skills-hive/leaderboard/"><i class="fas fa-trophy"></i><span>Leaderboard</span></a></li>
+        <li><a href="/skills-hive/friends/"><i class="fas fa-users"></i><span>Friends</span></a></li>
+        <li><a href="/skills-hive/hexahive/"><i class="fas fa-gamepad"></i><span>HexaHive</span></a></li>
+        <li><a href="/skills-hive/profile/"><i class="fas fa-user"></i><span>User Profile</span></a></li>
+        <li>
+            <form action="/skills-hive/" method="post" style="display: inline;">
+                <button type="submit" style="background: none; border: none; cursor: pointer; color: inherit; font: inherit;">
+                    <i class="fas fa-sign-out-alt"></i><span> Log Out</span>
+                </button>
+            </form>
+        </li>
+    </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main-content" id="main-content">
+    <header>
+        <!-- Leaderboard Tabs -->
+        <div class="leaderboard-tabs">
+            <a href="/skills-hive/leaderboard/" th:classappend="${friendMode} ? '' : ' active'">Overall Leaderboard</a>
+            <a href="/skills-hive/leaderboard/friends/" class="active" th:classappend="${friendMode} ? ' active' : ''">Friends Leaderboard</a>
+        </div>
+    </header>
+    <main>
+        <table>
+            <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Hours Completed</th>
+            </tr>
+            </thead>
+            <tbody><tr><td>1</td><td>leila</td><td>40 hours</td></tr><tr><td>2</td><td>amira</td><td>31 hours</td></tr><tr class="highlight"><td>3</td><td>tester</td><td>25 hours</td></tr>
+            
+            </tbody>
+        </table>
+    </main>
+</div>
+
+<!-- Font Awesome for Icons -->
+<script src="https://kit.fontawesome.com/4af7d25044.js" crossorigin="anonymous"></script>
+<!-- JavaScript for Sidebar Toggle -->
+<script src="/skills-hive/script/sidebar.js"></script>
+<script src="/skills-hive/script/bookmark.js"></script>
+</body>
+</html>

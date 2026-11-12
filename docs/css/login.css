@@ -1,0 +1,232 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #fff5d0;
+    padding: 20px;
+}
+
+/* Login Card Styles */
+.login-card {
+    display: flex;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    width: 100%;
+    max-width: 800px;
+}
+
+/* Welcome Side Styles */
+.welcome-side {
+    background: #FFD700;
+    color: white; /* Change text color to white */
+    padding: 40px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Welcome Side Styles */
+.welcome-side h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #4a4a4a; /* Change "Welcome Back!" text to black */
+}
+
+.welcome-side p {
+    font-size: 18px;
+    color: #4a4a4a; /* Change "Please login to continue." text to black */
+}
+
+/* Image Styles */
+.welcome-side img {
+    max-width: 60%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: 60px;
+}
+
+/* Form Side Styles */
+.form-side {
+    padding: 40px;
+    width: 50%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Form Side Styles */
+.form-side h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+    font-weight: bold;
+    color: #4a4a4a; /* Keep Skills Hive text in black */
+    margin-left: 20px; /* Add margin to move it to the right */
+}
+
+/* Form Elements */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #4a4a4a; /* Keep labels in black (username/password) */
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #4a4a4a; /* Keep input text in black */
+}
+
+/* Button Styles */
+.login-button {
+    width: 100%;
+    padding: 12px;
+    background: #FFCC00;
+    border: 2px solid #FFCC00;
+    border-radius: 8px;
+    color: white; /* Keep button text white */
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 20px 0;
+    transition: all 0.3s ease;
+}
+
+.login-button:hover {
+    background: transparent;
+    color: #FFCC00;
+    border-color: #FFCC00;
+}
+
+.login-button:active {
+    transform: scale(0.98);
+}
+
+/* Footer Styles */
+.form-footer {
+    text-align: center;
+    color: #4a4a4a; /* Keep footer text white */
+    font-size: 14px;
+}
+
+.form-footer a {
+    color: #FFD700;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* Forgot Password Link Styling */
+.form-side a {
+    color: #FFD700;  /* Yellow color */
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    margin-top: 10px;  /* Space between form elements */
+    transition: all 0.3s ease;
+}
+
+.form-side a:hover {
+    color: #FFCC00;  /* Slightly darker yellow on hover */
+    text-decoration: underline;
+}
+
+.form-side a:active {
+    transform: scale(0.98);  /* Shrink on click */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .login-card {
+        flex-direction: column;
+        max-width: 400px;
+    }
+
+    .welcome-side,
+    .form-side {
+        width: 100%;
+        padding: 30px;
+    }
+
+    .welcome-side img {
+        max-width: 80%; /* Adjust image size for smaller screens */
+    }
+
+    /* Forgot Password Link Styling */
+    .form-side a {
+        display: inline-block;
+        margin-top: 15px;
+        color: #FFD700;  /* Yellow color */
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .form-side a:hover {
+        color: #FFCC00;  /* Slightly darker yellow for hover */
+        text-decoration: underline;
+    }
+
+    .form-side a:active {
+        transform: scale(0.98); /* Slightly shrink on click */
+    }
+}
+
+.tester-disclaimer {
+    margin-top: 18px;
+    padding: 12px 14px;
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 8px;
+    color: #5c5340;
+    font-size: 13px;
+    line-height: 1.45;
+    text-align: center;
+}
+
+.form-side a.tester-button {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    background: #4a4a4a;
+    border: 2px solid #4a4a4a;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.form-side a.tester-button:hover {
+    background: #333333;
+    border-color: #333333;
+    color: #ffffff;
+    text-decoration: none;
+}
+

@@ -1,0 +1,44 @@
+.badge-card {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.badge-card img {
+    width: 50px; /* Adjust the badge image size */
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.badge-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.badge-details h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+    font-weight: bold;
+}
+
+.badge-details p {
+    margin: 5px 0;
+    font-size: 0.9em;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.badge-details p span {
+    font-weight: bold;
+    color: #333;
+}

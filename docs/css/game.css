@@ -1,0 +1,705 @@
+.game-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.game-header {
+    background: #FFF8DC;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.game-header h1 {
+    color: #333;
+    margin: 0 0 15px 0;
+    text-align: center;
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.level-info, .score-info {
+    text-align: center;
+}
+
+.level-info p, .score-info p {
+    margin: 5px 0;
+    font-size: 1.1em;
+    color: #666;
+}
+
+.level-selection {
+    text-align: center;
+    margin: 50px 0;
+}
+
+.level-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.level-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.level-card.unlocked {
+    border: 2px solid #FFD700;
+}
+
+.level-card.locked {
+    background: #f5f5f5;
+    opacity: 0.7;
+}
+
+.level-card:hover {
+    transform: translateY(-5px);
+}
+
+.level-card h3 {
+    color: #333;
+    margin: 0 0 10px 0;
+}
+
+.level-card p {
+    color: #666;
+    margin: 0 0 15px 0;
+}
+
+.level-card button {
+    background: #FFD700;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.level-card button:hover {
+    background: #FFA500;
+    color: #fff;
+}
+
+.locked-message {
+    color: #999;
+    font-style: italic;
+}
+
+#gameCanvas {
+    display: block;
+    margin: 20px auto;
+    background: #FFF8DC;
+    border: 2px solid #FFD700;
+    border-radius: 10px;
+}
+
+/* Enhanced Game Over Screen */
+#gameOver {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.8);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.game-over-content {
+    background: linear-gradient(135deg, #F5A800, #FFD700);
+    left: 8%;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    max-width: 80%;
+    width: 400px;
+    transform: scale(0.8);
+    animation: popIn 0.6s forwards cubic-bezier(0.18, 1.25, 0.6, 1.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.game-over-content::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><polygon points="50,3 95,25 95,75 50,97 5,75 5,25" fill="none" stroke="%23FFD700" stroke-width="2"/></svg>') repeat;
+    background-size: 50px 50px;
+    opacity: 0.2;
+    z-index: -1;
+    animation: backgroundScroll 20s linear infinite;
+}
+
+@keyframes backgroundScroll {
+    from { background-position: 0 0; }
+    to { background-position: 100px 100px; }
+}
+
+.bee-border {
+    border: 3px solid #FFA500;
+    border-radius: 15px;
+    padding: 25px;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: inset 0 0 20px rgba(255, 165, 0, 0.3);
+}
+
+.sad-bee {
+    font-size: 50px;
+    margin-bottom: 10px;
+    animation: sadBeeAnimation 3s infinite;
+    display: inline-block;
+    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes sadBeeAnimation {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-5px) rotate(-10deg); }
+    75% { transform: translateY(5px) rotate(10deg); }
+}
+
+.game-over-content h2 {
+    color: #333;
+    font-size: 36px;
+    margin: 10px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+}
+
+.final-score {
+    font-size: 24px;
+    color: #333;
+    margin: 15px 0;
+}
+
+#finalScore {
+    font-size: 32px;
+    font-weight: bold;
+    color: #FF8C00;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    animation: scoreCountAnimation 0.8s ease-out;
+}
+
+@keyframes scoreCountAnimation {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.honeycomb-separator {
+    margin: 15px 0;
+    font-size: 24px;
+    letter-spacing: 8px;
+    color: #FFD700;
+    animation: glowHoneycomb 2s infinite alternate;
+}
+
+@keyframes glowHoneycomb {
+    from { text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+    to { text-shadow: 0 0 10px rgba(255, 215, 0, 1), 0 0 15px rgba(255, 165, 0, 0.8); }
+}
+
+.motivational-message {
+    color: #555;
+    font-style: italic;
+    margin: 15px 0 25px;
+    line-height: 1.4;
+    position: relative;
+    padding: 0 10px;
+}
+
+.motivational-message::before,
+.motivational-message::after {
+    content: '"';
+    font-size: 30px;
+    color: #FFD700;
+    position: absolute;
+    height: 15px;
+}
+
+.motivational-message::before {
+    top: -15px;
+    left: -5px;
+}
+
+.motivational-message::after {
+    bottom: -15px;
+    right: -5px;
+}
+
+.game-over-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.game-over-buttons button {
+    background-color: #FFA500;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.restart-btn {
+    background-color: #d32525 !important;
+}
+
+.levels-btn {
+    background-color: #2196F3 !important;
+}
+
+.game-over-buttons button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+}
+
+.game-over-buttons button:active {
+    transform: translateY(1px);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.game-info {
+    /* Make sure .game-info is a positioned container */
+    position: relative;
+}
+
+#pauseButton {
+    position: absolute;
+    /* Place in the center (horizontal + vertical) of .game-info */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    /* Your existing styling */
+    background-color: rgba(0, 0, 0, 0.7);
+    border: none;
+    color: #fff;
+    padding: 10px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+}
+#pauseButton.hidden {
+    display: none;
+}
+
+/* Collapsible Instructions Section */
+.collapsible {
+    background-color: #FFD700; /* Gold background */
+    color: #333; /* Dark text */
+    cursor: pointer;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.collapsible:hover {
+    background-color: #FFA500; /* Orange on hover */
+}
+
+.collapsible.active {
+    background-color: #FFA500; /* Orange when active */
+}
+
+.content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: #FFF8DC; /* Light beige background */
+    border-radius: 10px;
+    margin-top: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.content h2 {
+    color: #333;
+    margin-top: 20px;
+}
+
+.content ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.content ul li {
+    margin-bottom: 10px;
+    color: #666;
+    font-size: 15px;
+}
+.content p{
+    font-size: 15px;
+}
+
+/* Pop-up Styles */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 250px; /* Adjust based on your sidebar width */
+    width: calc(100% - 250px); /* Adjust based on your sidebar width */
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background: #FFF8DC;
+    width: 80%;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.popup-content p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.popup-content button {
+    background: #FFD700;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.popup-content button:hover {
+    background: #FFA500;
+    color: #fff;
+
+}
+
+/* Hexagon Background */
+.hexagon-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    z-index: 1;
+}
+/* Hexagon Background */
+.hexagon-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.hexagon-background svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* New best score */
+
+.celebration-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.8);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.celebration-content {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    left: 8%;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+    max-width: 80%;
+    transform: scale(0.8);
+    animation: popIn 0.6s forwards cubic-bezier(0.18, 1.25, 0.6, 1.3);
+    position: relative;
+
+}
+
+.celebration-content h2 {
+    color: #fff;
+    font-size: 36px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.celebration-content p {
+    color: #fff;
+    font-size: 24px;
+    margin: 15px 0;
+}
+
+.celebration-content .score {
+    font-size: 48px;
+    font-weight: bold;
+    color: #fff;
+    margin: 20px 0;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+.celebration-content button {
+    background-color: #fff;
+    color: #FFA500;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 18px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.celebration-content button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.bee-icon {
+    font-size: 70px;
+    display: inline-block;
+    animation: wiggle 0.5s infinite alternate ease-in-out;
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.7));
+}
+
+.dancing-bee {
+    position: relative;
+    height: 100px;
+    width: 100px;
+    margin: 0 auto 20px;
+    animation: flyAround 3s infinite;
+}
+
+
+.dancing-bee::before {
+    top: 50%;
+    left: 20%;
+    transform: rotate(-45deg);
+    animation-delay: 0.5s;
+}
+
+.dancing-bee::after {
+    top: 60%;
+    right: 20%;
+    transform: rotate(45deg);
+    animation-delay: 1.5s;
+}
+
+@keyframes honeyDrop {
+    0% { opacity: 0; transform: translateY(-10px) scale(0.8) rotate(-45deg); }
+    20% { opacity: 1; transform: translateY(0) scale(1) rotate(-45deg); }
+    80% { opacity: 1; transform: translateY(15px) scale(1.1) rotate(-45deg); }
+    100% { opacity: 0; transform: translateY(25px) scale(0.8) rotate(-45deg); }
+}
+
+@keyframes flyAround {
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translate(-20px, -10px) rotate(-10deg) scale(1.1);
+    }
+    50% {
+        transform: translate(0, -20px) rotate(0deg) scale(1);
+    }
+    75% {
+        transform: translate(20px, -10px) rotate(10deg) scale(1.1);
+    }
+    100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+}
+
+/* Add a wiggle effect to the bee icon itself */
+.bee-icon {
+    display: inline-block;
+    animation: wiggle 0.5s infinite alternate ease-in-out, glowEffect 1.5s infinite alternate;
+}
+
+@keyframes wiggle {
+    from { transform: rotate(-10deg); }
+    to { transform: rotate(10deg); }
+}
+
+@keyframes glowEffect {
+    from { text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+    to { text-shadow: 0 0 20px rgba(255, 215, 0, 0.9), 0 0 30px rgba(255, 165, 0, 0.7); }
+}
+
+.scores-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 15px 0;
+}
+
+.final-score, .best-score {
+    font-size: 22px;
+    color: #333;
+    margin: 5px 0;
+}
+
+.best-score {
+    color: #333;
+}
+
+#gameOverBestScore {
+    font-size: 30px;
+    font-weight: bold;
+    color: #FF8C00;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* Add a small crown icon to the best score */
+#gameOverBestScore::before {
+    content: '👑';
+    font-size: 16px;
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.back-arrow {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 20px;
+    color: #555;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.back-arrow .tooltip {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    white-space: nowrap;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+/* Add a small triangle pointing to the arrow */
+.back-arrow .tooltip::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -5px;
+    transform: translateY(-50%);
+    border-width: 5px 5px 5px 0;
+    border-style: solid;
+    border-color: transparent rgba(0, 0, 0, 0.8) transparent transparent;
+}
+
+.back-arrow:hover .tooltip {
+    opacity: 1;
+    left: 45px;
+}
+
+.back-arrow:hover {
+    background-color: #FFA500;
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-btn {
+    background-color: #FFD700 !important;
+    border: 2px solid #000000;
+}
+
+/* Game Sections Container - REMOVED */
+/* Leaderboard Styles - REMOVED */
+

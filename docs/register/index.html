@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/skills-hive/tester-static.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills Hive Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/skills-hive/css/register.css">
+</head>
+<body>
+<div class="form-container">
+    <!-- Success message block -->
+    
+
+    <h2>Registration</h2>
+    <form action="/skills-hive/register/" method="post" th:object="${user}">
+        <!-- Name fields -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="firstname">First Name:</label>
+                <input type="text" id="firstname" name="firstname" placeholder="Enter your First Name" th:value="${user.firstname}" required>
+                <div th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}" class="error-message"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="lastname">Last Name:</label>
+                <input type="text" id="lastname" name="lastname" placeholder="Enter your Last Name" th:value="${user.lastname}" required>
+                <div th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" class="error-message"></div>
+            </div>
+        </div>
+
+        <!-- Username and Email fields -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Enter your Username" th:value="${user.username}" required>
+                <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error-message"></div>
+                <div th:if="${Userexist != null}" th:text="${Userexist}" class="error-message"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your Email" th:value="${user.email}" required>
+                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-message"></div>
+                <div th:if="${EmailExist != null}" th:text="${EmailExist}" class="error-message"></div>
+            </div>
+        </div>
+
+        <!-- Password field -->
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your Password" required>
+            <div id="password-strength" style="margin-top: 5px;"></div>
+            <div id="password-error" class="error-message"></div>
+            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-message"></div>
+        </div>
+
+        <!-- Skill Level field -->
+        <div class="form-group">
+            <label for="skillLevel">Skill Level:</label>
+            <select id="skillLevel" name="skillLevel" required>
+                <option value="">Select your skill level</option>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+            </select>
+        </div>
+
+        <!-- Security Questions and Answers side by side -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="securityQuestion1">Security Question 1:</label>
+                <select id="securityQuestion1" name="securityQuestion1" required>
+                    <option value="">Select a security question</option>
+                    <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+                    <option value="What was the name of your first pet?">What was the name of your first pet?</option>
+                    <option value="What is your favorite book?">What is your favorite book?</option>
+                    <option value="What city were you born in?">What city were you born in?</option>
+                    <option value="What is your favorite color?">What is your favorite color?</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="securityAnswer1">Security Answer 1:</label>
+                <input type="text" id="securityAnswer1" name="securityAnswer1" placeholder="Enter your answer" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="securityQuestion2">Security Question 2:</label>
+                <select id="securityQuestion2" name="securityQuestion2" required>
+                    <option value="">Select a security question</option>
+                    <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+                    <option value="What was the name of your first pet?">What was the name of your first pet?</option>
+                    <option value="What is your favorite book?">What is your favorite book?</option>
+                    <option value="What city were you born in?">What city were you born in?</option>
+                    <option value="What is your favorite color?">What is your favorite color?</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="securityAnswer2">Security Answer 2:</label>
+                <input type="text" id="securityAnswer2" name="securityAnswer2" placeholder="Enter your answer" required>
+            </div>
+        </div>
+
+        <!-- Terms and Conditions -->
+        <div class="form-group checkbox-container">
+            <input type="checkbox" id="termsAccepted" name="termsAccepted" th:checked="${user.termsAccepted}" required>
+            <label for="termsAccepted">I agree to the <a href="/skills-hive/terms/" target="_blank">Terms & Conditions</a></label>
+            <div th:if="${#fields.hasErrors('termsAccepted')}" th:errors="*{termsAccepted}" class="error-message"></div>
+        </div>
+
+        <!-- Register Button -->
+        <button type="submit" class="primary-button">Register</button>
+    </form>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const passwordField = document.getElementById('password');
+            const passwordStrengthDiv = document.getElementById('password-strength');
+            const passwordErrorDiv = document.getElementById('password-error'); // Div for password error display
+
+            passwordField.addEventListener('input', function() {
+                const password = passwordField.value;
+                let strength = 0;
+                let errorMessage = "";
+
+                // Check password strength based on criteria
+                if (password.length >= 8) strength += 1;
+                if (/[a-z]/.test(password)) strength += 1;
+                if (/[A-Z]/.test(password)) strength += 1;
+                if (/\d/.test(password)) strength += 1;
+                if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength += 1;
+
+                // Display password strength feedback
+                switch (strength) {
+                    case 1:
+                    case 2:
+                        passwordStrengthDiv.textContent = "Weak password";
+                        passwordStrengthDiv.style.color = "red";
+                        break;
+                    case 3:
+                        passwordStrengthDiv.textContent = "Moderate password";
+                        passwordStrengthDiv.style.color = "orange";
+                        break;
+                    case 4:
+                    case 5:
+                        passwordStrengthDiv.textContent = "Strong password";
+                        passwordStrengthDiv.style.color = "green";
+                        break;
+                    default:
+                        passwordStrengthDiv.textContent = "";
+                        break;
+                }
+
+                // Validate password against regex
+                const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                if (!regex.test(password)) {
+                    errorMessage = "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
+                    passwordErrorDiv.textContent = errorMessage;
+                    passwordErrorDiv.style.color = "red";
+                } else {
+                    passwordErrorDiv.textContent = "";
+                }
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const usernameField = document.getElementById('username');
+            const emailField = document.getElementById('email');
+            const usernameError = document.getElementById('username-error');
+            const emailError = document.getElementById('email-error');
+
+            // Check username availability
+            usernameField.addEventListener('blur', function() {
+                const username = usernameField.value;
+                if (username) {
+                    // Send AJAX request to check if username is taken
+                    fetch(`/check-username?username=${username}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.exists) {
+                                usernameError.style.display = 'block';
+                            } else {
+                                usernameError.style.display = 'none';
+                            }
+                        });
+                }
+            });
+
+            // Check email availability
+            emailField.addEventListener('blur', function() {
+                const email = emailField.value;
+                if (email) {
+                    // Send AJAX request to check if email is taken
+                    fetch(`/check-email?email=${email}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.exists) {
+                                emailError.style.display = 'block';
+                            } else {
+                                emailError.style.display = 'none';
+                            }
+                        });
+                }
+            });
+        });
+    </script>
+
+    <p class="form-footer">Already have an account? <a href="/skills-hive/">Login</a> here.</p>
+</div>
+</body>
+</html>
