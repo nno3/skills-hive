@@ -4,6 +4,8 @@ A learning site with IBM SkillsBuild courses, bookmarks, friends, a leaderboard,
 
 This was a group project. I led the group and built part of it.
 
+Live page: https://nno3.github.io/skills-hive/
+
 ## Look around without registering
 
 ```bash
