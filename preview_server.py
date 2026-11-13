@@ -338,10 +338,12 @@ def fill_leaderboard(html, friends_only):
         klass = ' class="highlight"' if name == "tester" else ""
         rows.append(f"<tr{klass}><td>{rank}</td><td>{esc(name)}</td><td>{hours}</td></tr>")
     html = html.replace("<tbody>", "<tbody>" + "".join(rows), 1)
+    overall = 'href="/leaderboard" th:classappend="${friendMode} ? \'\' : \' active\'"'
+    friends = 'href="/leaderboard/friends" th:classappend="${friendMode} ? \' active\' : \'\'"'
     if friends_only:
-        html = html.replace('href="/leaderboard/friends"', 'href="/leaderboard/friends" class="active"', 1)
+        html = html.replace(friends, 'href="/leaderboard/friends" class="active"', 1)
     else:
-        html = html.replace('href="/leaderboard"', 'href="/leaderboard" class="active"', 1)
+        html = html.replace(overall, 'href="/leaderboard" class="active"', 1)
     return html
 
 
