@@ -47,6 +47,7 @@ def rewrite_html(html):
         lambda match: f'{match.group(1)}="{public_url(match.group(2))}"',
         html,
     )
+    html = html.replace(f'href="{BASE}/css/sidebar.css"', f'href="{BASE}/css/sidebar.css?v=4"')
     html = html.replace('src="photos/', f'src="{BASE}/photos/')
     html = html.replace("src='photos/", f"src='{BASE}/photos/")
     script = f'<script src="{BASE}/tester-static.js"></script>'

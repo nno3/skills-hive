@@ -67,9 +67,13 @@ body {
     font-size: 18px;
 }
 
-.sidebar-menu li a:hover {
+.sidebar-menu li:hover {
+    background-color: #FFA000;
+}
+
+.sidebar-menu li a:hover,
+.sidebar-menu li:hover button {
     color: #000;
-    background-color:#FFA000 ; /* Darker Yellow on Hover */
 }
 .sidebar-menu li.active {
     background-color: #FFA000; /* Darker golden/honey color for active item */
