@@ -2,7 +2,7 @@
 
 A learning site with IBM SkillsBuild courses, bookmarks, friends, a leaderboard, and the HexaHive puzzle game.
 
-This was a group project. I led the group and built part of it.
+This was a group project. I led the group and built the dashboard, the course page, the HexaHive game, and the chatbot.
 
 Live page: https://nno3.github.io/skills-hive/
 
